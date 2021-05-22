@@ -5,7 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.user.fadhlanhadaina.core.model.TVSeries
+import com.user.fadhlanhadaina.core.domain.model.TVSeries
 import com.user.fadhlanhadaina.moviecataloguesubmission.databinding.RowDataBinding
 import com.user.fadhlanhadaina.moviecataloguesubmission.ui.activities.detail.tvseries.DetailTVSeriesActivity
 import com.user.fadhlanhadaina.core.util.ExtFun.load
@@ -18,10 +18,10 @@ class TVSeriesListAdapter(private val tvSerieLists: ArrayList<TVSeries>): Recycl
             binding.ivList.load(tvSeries.posterUrl)
             binding.tvTitleList.text = tvSeries.title
 
-            val splittedDate = tvSeries.date.split("/")
+            val splittedDate = tvSeries.releaseDate.split("/")
             val year = when(splittedDate.size) {
                 2 -> splittedDate[2]
-                else -> tvSeries.date.split("-")[0]
+                else -> tvSeries.releaseDate.split("-")[0]
             }
             binding.tvYearList.text = "(${year})"
             binding.root.setOnClickListener {

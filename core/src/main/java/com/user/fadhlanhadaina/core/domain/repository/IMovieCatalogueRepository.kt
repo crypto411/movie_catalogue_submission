@@ -1,13 +1,13 @@
-package com.user.fadhlanhadaina.core.source
+package com.user.fadhlanhadaina.core.domain.repository
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
-import com.user.fadhlanhadaina.core.model.Movie
-import com.user.fadhlanhadaina.core.model.MovieFavorite
-import com.user.fadhlanhadaina.core.model.TVSeries
-import com.user.fadhlanhadaina.core.model.TVSeriesFavorite
+import com.user.fadhlanhadaina.core.domain.model.Movie
+import com.user.fadhlanhadaina.core.domain.model.MovieFavorite
+import com.user.fadhlanhadaina.core.domain.model.TVSeries
+import com.user.fadhlanhadaina.core.domain.model.TVSeriesFavorite
 
-interface MovieCatalogueDataSource {
+interface IMovieCatalogueRepository {
     fun getMovies(): LiveData<ArrayList<Movie>>
     fun getMovieDetail(id: Int): LiveData<Movie>
     fun getTVSeries(): LiveData<ArrayList<TVSeries>>

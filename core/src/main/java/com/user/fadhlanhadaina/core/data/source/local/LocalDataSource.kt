@@ -1,9 +1,9 @@
-package com.user.fadhlanhadaina.core.source.local
+package com.user.fadhlanhadaina.core.data.source.local
 
 import androidx.paging.DataSource
-import com.user.fadhlanhadaina.core.model.MovieFavorite
-import com.user.fadhlanhadaina.core.model.TVSeriesFavorite
-import com.user.fadhlanhadaina.core.source.local.database.FavoriteDao
+import com.user.fadhlanhadaina.core.domain.model.MovieFavorite
+import com.user.fadhlanhadaina.core.domain.model.TVSeriesFavorite
+import com.user.fadhlanhadaina.core.data.source.local.database.FavoriteDao
 
 class LocalDataSource constructor(private val favoriteDao: FavoriteDao) {
     companion object {

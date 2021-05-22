@@ -1,21 +1,19 @@
-package com.user.fadhlanhadaina.core.model
+package com.user.fadhlanhadaina.core.data.source.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class Movie (
-    var id: Int,
+data class DetailMovieResponse(
+    val id: Int,
 
     @SerializedName("poster_path")
-    var posterUrl: String,
+    val posterPath: String,
 
     var title: String,
 
     @SerializedName("release_date")
-    var date: String,
+    var releaseDate: String,
 
-    var stringGenres: String,
-
-    var genres: ArrayList<Genre>,
+    var genres: ArrayList<GenreResponse>,
 
     @SerializedName("runtime")
     var duration: Int,

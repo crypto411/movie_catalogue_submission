@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.user.fadhlanhadaina.core.model.MovieFavorite
+import com.user.fadhlanhadaina.core.domain.model.MovieFavorite
 import com.user.fadhlanhadaina.moviecataloguesubmission.databinding.RowDataBinding
 import com.user.fadhlanhadaina.moviecataloguesubmission.ui.activities.detail.movie.DetailMovieActivity
 import com.user.fadhlanhadaina.core.util.ExtFun.load

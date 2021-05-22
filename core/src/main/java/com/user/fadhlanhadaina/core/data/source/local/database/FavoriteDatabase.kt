@@ -1,11 +1,11 @@
-package com.user.fadhlanhadaina.core.source.local.database
+package com.user.fadhlanhadaina.core.data.source.local.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.user.fadhlanhadaina.core.model.MovieFavorite
-import com.user.fadhlanhadaina.core.model.TVSeriesFavorite
+import com.user.fadhlanhadaina.core.domain.model.MovieFavorite
+import com.user.fadhlanhadaina.core.domain.model.TVSeriesFavorite
 
 @Database(entities = [MovieFavorite::class, TVSeriesFavorite::class], version = 1, exportSchema = false)
 abstract class FavoriteDatabase: RoomDatabase() {

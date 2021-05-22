@@ -1,25 +1,30 @@
-package com.user.fadhlanhadaina.core.source
+package com.user.fadhlanhadaina.core.data.source
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.user.fadhlanhadaina.core.model.Movie
-import com.user.fadhlanhadaina.core.model.MovieFavorite
-import com.user.fadhlanhadaina.core.model.TVSeries
-import com.user.fadhlanhadaina.core.model.TVSeriesFavorite
-import com.user.fadhlanhadaina.core.source.local.LocalDataSource
-import com.user.fadhlanhadaina.core.source.remote.RemoteDataSource
+import com.user.fadhlanhadaina.core.data.source.remote.RemoteDataSource
+import com.user.fadhlanhadaina.core.domain.model.Movie
+import com.user.fadhlanhadaina.core.domain.model.MovieFavorite
+import com.user.fadhlanhadaina.core.domain.model.TVSeries
+import com.user.fadhlanhadaina.core.domain.model.TVSeriesFavorite
+import com.user.fadhlanhadaina.core.data.source.local.LocalDataSource
+import com.user.fadhlanhadaina.core.data.source.remote.response.DetailMovieResponse
+import com.user.fadhlanhadaina.core.data.source.remote.response.DetailTVSeriesResponse
+import com.user.fadhlanhadaina.core.domain.repository.IMovieCatalogueRepository
+import com.user.fadhlanhadaina.core.util.Mapper.mapToMovie
+import com.user.fadhlanhadaina.core.util.Mapper.mapToTVSeries
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class MovieCatalogueRepository(private val remoteDataSource: RemoteDataSource, private val localDataSource: LocalDataSource):
-    MovieCatalogueDataSource {
+    IMovieCatalogueRepository {
 
     companion object {
         @Volatile
-        private var instance: MovieCatalogueRepository? = null
-        fun newInstance(remoteData: RemoteDataSource, localData: LocalDataSource): MovieCatalogueRepository =
+        private var instance: IMovieCatalogueRepository? = null
+        fun newInstance(remoteData: RemoteDataSource, localData: LocalDataSource): IMovieCatalogueRepository =
             instance ?: synchronized(this) {
                 instance ?: MovieCatalogueRepository(remoteData, localData).apply { instance = this }
             }
@@ -28,8 +33,8 @@ class MovieCatalogueRepository(private val remoteDataSource: RemoteDataSource, p
     override fun getMovies(): LiveData<ArrayList<Movie>> {
         val movieLiveData = MutableLiveData<ArrayList<Movie>>()
         remoteDataSource.getMovies(object: RemoteDataSource.PopularMovieCallback {
-            override fun onMoviesReceived(movieResponse: ArrayList<Movie>) {
-                movieLiveData.postValue(movieResponse)
+            override fun onMoviesReceived(movieResponse: ArrayList<DetailMovieResponse>) {
+                movieLiveData.postValue(movieResponse.mapToMovie())
             }
         })
         return movieLiveData
@@ -38,20 +43,9 @@ class MovieCatalogueRepository(private val remoteDataSource: RemoteDataSource, p
     override fun getMovieDetail(id: Int): LiveData<Movie> {
         val movieLiveData = MutableLiveData<Movie>()
         remoteDataSource.getMovieDetail(id, object: RemoteDataSource.MovieDetailCallback {
-            override fun onDetailMovieReceived(movie: Movie) {
-                movie.genres.forEachIndexed { index, genre ->
-                    movie.stringGenres = if(index == 0 && movie.genres.size > 1)
-                        "${genre.name},"
-                    else if(index == 0)
-                        genre.name
-                    else if(index == movie.genres.size-1)
-                        "${movie.stringGenres} ${genre.name}"
-                    else
-                        "${movie.stringGenres} ${genre.name},"
-                }
-                movieLiveData.postValue(movie)
+            override fun onDetailMovieReceived(detailMovieResponse: DetailMovieResponse) {
+                movieLiveData.postValue(detailMovieResponse.mapToMovie())
             }
-
         })
         return movieLiveData
     }
@@ -59,8 +53,8 @@ class MovieCatalogueRepository(private val remoteDataSource: RemoteDataSource, p
     override fun getTVSeries(): LiveData<ArrayList<TVSeries>> {
         val tvSeriesLiveData = MutableLiveData<ArrayList<TVSeries>>()
         remoteDataSource.getTVSeries(object: RemoteDataSource.PopularTVSeriesCallback {
-            override fun onTVSeriesReceived(tvSeriesResponse: ArrayList<TVSeries>) {
-                tvSeriesLiveData.postValue(tvSeriesResponse)
+            override fun onTVSeriesReceived(tvSeriesResponse: ArrayList<DetailTVSeriesResponse>) {
+                tvSeriesLiveData.postValue(tvSeriesResponse.mapToTVSeries())
             }
         })
         return tvSeriesLiveData
@@ -69,21 +63,9 @@ class MovieCatalogueRepository(private val remoteDataSource: RemoteDataSource, p
     override fun getTVSeriesDetail(id: Int): LiveData<TVSeries> {
         val tvSeriesLiveData = MutableLiveData<TVSeries>()
         remoteDataSource.getTVSeriesDetail(id, object: RemoteDataSource.TVSeriesDetailCallback {
-            override fun onTVSeriesReceived(tvSeries: TVSeries) {
-                tvSeries.genres.forEachIndexed { index, genre ->
-                    tvSeries.stringGenres = if(index == 0 && tvSeries.genres.size > 1)
-                        "${genre.name},"
-                    else if(index == 0)
-                        genre.name
-                    else if(index == tvSeries.genres.size-1)
-                        "${tvSeries.stringGenres} ${genre.name}"
-                    else
-                        "${tvSeries.stringGenres} ${genre.name},"
-                }
-                tvSeries.duration = if(tvSeries.durationArray.size > 0) tvSeries.durationArray[0] else 0
-                tvSeriesLiveData.postValue(tvSeries)
+            override fun onTVSeriesReceived(detailTVSeriesResponse: DetailTVSeriesResponse) {
+                tvSeriesLiveData.postValue(detailTVSeriesResponse.mapToTVSeries())
             }
-
         })
         return tvSeriesLiveData
     }

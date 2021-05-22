@@ -3,12 +3,12 @@ package com.user.fadhlanhadaina.favorite_feature.viewmodel
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.user.fadhlanhadaina.core.source.Injection
-import com.user.fadhlanhadaina.core.source.MovieCatalogueRepository
+import com.user.fadhlanhadaina.core.di.Injection
+import com.user.fadhlanhadaina.core.domain.repository.IMovieCatalogueRepository
 import com.user.fadhlanhadaina.favorite_feature.fragment.movie.FavoriteMovieViewModel
 import com.user.fadhlanhadaina.favorite_feature.fragment.tvseries.FavoriteTVSeriesViewModel
 
-class ViewModelFactory(private val movieCatalogueRepository: MovieCatalogueRepository): ViewModelProvider.NewInstanceFactory() {
+class ViewModelFactory(private val movieCatalogueRepository: IMovieCatalogueRepository): ViewModelProvider.NewInstanceFactory() {
     companion object {
         fun newInstance(application: Application): ViewModelFactory {
             synchronized(ViewModelFactory::class.java) {

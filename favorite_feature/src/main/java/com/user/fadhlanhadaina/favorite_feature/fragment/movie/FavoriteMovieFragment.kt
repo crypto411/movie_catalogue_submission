@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.lifecycle.observe
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.user.fadhlanhadaina.core.model.MovieFavorite
+import com.user.fadhlanhadaina.core.domain.model.MovieFavorite
 import com.user.fadhlanhadaina.favorite_feature.databinding.FavoriteMovieFragmentBinding
 import com.user.fadhlanhadaina.favorite_feature.viewmodel.ViewModelFactory
 

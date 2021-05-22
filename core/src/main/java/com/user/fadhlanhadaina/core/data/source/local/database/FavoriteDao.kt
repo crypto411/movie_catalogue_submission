@@ -1,9 +1,9 @@
-package com.user.fadhlanhadaina.core.source.local.database
+package com.user.fadhlanhadaina.core.data.source.local.database
 
 import androidx.paging.DataSource
 import androidx.room.*
-import com.user.fadhlanhadaina.core.model.MovieFavorite
-import com.user.fadhlanhadaina.core.model.TVSeriesFavorite
+import com.user.fadhlanhadaina.core.domain.model.MovieFavorite
+import com.user.fadhlanhadaina.core.domain.model.TVSeriesFavorite
 
 @Dao
 interface FavoriteDao {

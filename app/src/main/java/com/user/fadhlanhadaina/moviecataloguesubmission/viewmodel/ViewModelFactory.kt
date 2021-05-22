@@ -3,14 +3,14 @@ package com.user.fadhlanhadaina.moviecataloguesubmission.viewmodel
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.user.fadhlanhadaina.core.source.Injection
-import com.user.fadhlanhadaina.core.source.MovieCatalogueRepository
+import com.user.fadhlanhadaina.core.di.Injection
+import com.user.fadhlanhadaina.core.domain.repository.IMovieCatalogueRepository
 import com.user.fadhlanhadaina.moviecataloguesubmission.ui.activities.detail.movie.DetailMovieViewModel
 import com.user.fadhlanhadaina.moviecataloguesubmission.ui.activities.detail.tvseries.DetailTVSeriesViewModel
 import com.user.fadhlanhadaina.moviecataloguesubmission.ui.fragments.home.movie.MovieViewModel
 import com.user.fadhlanhadaina.moviecataloguesubmission.ui.fragments.home.tvseries.TVSeriesViewModel
 
-class ViewModelFactory(private val movieCatalogueRepository: MovieCatalogueRepository): ViewModelProvider.NewInstanceFactory() {
+class ViewModelFactory(private val movieCatalogueRepository: IMovieCatalogueRepository): ViewModelProvider.NewInstanceFactory() {
     companion object {
         fun newInstance(application: Application): ViewModelFactory {
             synchronized(ViewModelFactory::class.java) {

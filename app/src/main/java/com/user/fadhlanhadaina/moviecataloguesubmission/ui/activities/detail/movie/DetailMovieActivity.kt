@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.user.fadhlanhadaina.moviecataloguesubmission.R
-import com.user.fadhlanhadaina.core.model.MovieFavorite
+import com.user.fadhlanhadaina.core.domain.model.MovieFavorite
 import com.user.fadhlanhadaina.moviecataloguesubmission.databinding.ActivityDetailBinding
 import com.user.fadhlanhadaina.core.util.ExtFun.load
 import com.user.fadhlanhadaina.core.util.ExtFun.show
@@ -56,17 +56,17 @@ class DetailMovieActivity : AppCompatActivity() {
             binding.progressBar.show(false)
             binding.ivMovieDetail.load(it.posterUrl)
 
-            val splittedDate = it.date.split("/")
+            val splittedDate = it.releaseDate.split("/")
             val year = when(splittedDate.size) {
                 2 -> splittedDate[2]
-                else -> it.date.split("-")[0]
+                else -> it.releaseDate.split("-")[0]
             }
             binding.tvTitleDetail.text = "${it.title} ($year)"
             binding.tvDurationDetail.text = "${it.duration} minute(s)"
             binding.tvOverviewDetail.text = it.overview
-            binding.tvGenreDetail.text = "Genre: ${it.stringGenres}"
+            binding.tvGenreDetail.text = "Genre: ${it.genres}"
 
-            movieFavorite = MovieFavorite(it.id, it.posterUrl, it.title, it.date, it.stringGenres)
+            movieFavorite = MovieFavorite(it.id, it.posterUrl, it.title, it.releaseDate, it.genres)
             binding.btnFavorite.isEnabled = true
             binding.btnFavorite.setOnClickListener {
                 favorited = when(favorited) {

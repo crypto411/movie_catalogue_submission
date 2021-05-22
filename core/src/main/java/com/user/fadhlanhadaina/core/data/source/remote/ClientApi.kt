@@ -1,4 +1,4 @@
-package com.user.fadhlanhadaina.core.source.remote
+package com.user.fadhlanhadaina.core.data.source.remote
 
 import com.user.fadhlanhadaina.core.BuildConfig
 import retrofit2.Retrofit
