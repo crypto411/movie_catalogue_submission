@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    package="com.user.fadhlanhadaina.favorite_feature">
+
+    <application>
+        <activity android:name=".activity.FavoriteActivity"></activity>
+    </application>
+
+    <dist:module
+        dist:instant="false"
+        dist:title="@string/title_favorite_feature">
+        <dist:delivery>
+            <dist:install-time />
+        </dist:delivery>
+        <dist:fusing dist:include="true" />
+    </dist:module>
+</manifest>
