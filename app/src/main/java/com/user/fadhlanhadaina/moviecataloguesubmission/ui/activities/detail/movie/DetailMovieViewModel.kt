@@ -7,24 +7,25 @@ import com.user.fadhlanhadaina.core.data.source.MovieCatalogueRepository
 import com.user.fadhlanhadaina.core.domain.model.Movie
 import com.user.fadhlanhadaina.core.domain.model.MovieFavorite
 import com.user.fadhlanhadaina.core.domain.repository.IMovieCatalogueRepository
+import com.user.fadhlanhadaina.core.domain.usecase.MovieCatalogueUseCase
 import kotlinx.coroutines.launch
 
-class DetailMovieViewModel(private val movieCatalogueRepository: IMovieCatalogueRepository): ViewModel() {
+class DetailMovieViewModel(private val movieCatalogueUseCase: MovieCatalogueUseCase): ViewModel() {
     private var movie: LiveData<Movie>? = null
 
     fun getMovie(id: Int): LiveData<Movie>? {
         if(movie == null)
-            movie = movieCatalogueRepository.getMovieDetail(id)
+            movie = movieCatalogueUseCase.getMovieDetail(id)
         return movie
     }
 
     fun insertFavoriteMovie(movieFavorite: MovieFavorite) = viewModelScope.launch {
-        movieCatalogueRepository.setFavoriteMovie(movieFavorite)
+        movieCatalogueUseCase.setFavoriteMovie(movieFavorite)
     }
 
     fun deleteFavoriteMovie(movieFavorite: MovieFavorite) = viewModelScope.launch {
-        movieCatalogueRepository.deleteFavoriteMovie(movieFavorite)
+        movieCatalogueUseCase.deleteFavoriteMovie(movieFavorite)
     }
 
-    fun isFavoriteMovie(id: Int) = movieCatalogueRepository.isFavoriteMovieExist(id)
+    fun isFavoriteMovie(id: Int) = movieCatalogueUseCase.isFavoriteMovieExist(id)
 }

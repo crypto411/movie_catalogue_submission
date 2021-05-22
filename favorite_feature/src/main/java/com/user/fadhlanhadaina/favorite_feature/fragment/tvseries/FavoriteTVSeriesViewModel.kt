@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
 import com.user.fadhlanhadaina.core.domain.model.TVSeriesFavorite
-import com.user.fadhlanhadaina.core.domain.repository.IMovieCatalogueRepository
+import com.user.fadhlanhadaina.core.domain.usecase.MovieCatalogueUseCase
 
-class FavoriteTVSeriesViewModel(private val movieCatalogueRepository: IMovieCatalogueRepository) : ViewModel() {
+class FavoriteTVSeriesViewModel(private val movieCatalogueUseCase: MovieCatalogueUseCase) : ViewModel() {
     fun getAllFavoriteTVSeries(): LiveData<PagedList<TVSeriesFavorite>> =
-        movieCatalogueRepository.getFavoriteTVSeries()
+        movieCatalogueUseCase.getFavoriteTVSeries()
 }

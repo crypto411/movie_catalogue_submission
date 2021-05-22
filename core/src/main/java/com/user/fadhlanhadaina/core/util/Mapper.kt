@@ -1,6 +1,5 @@
 package com.user.fadhlanhadaina.core.util
 
-import android.util.Log
 import com.user.fadhlanhadaina.core.data.source.remote.response.DetailMovieResponse
 import com.user.fadhlanhadaina.core.data.source.remote.response.DetailTVSeriesResponse
 import com.user.fadhlanhadaina.core.domain.model.Movie
