@@ -5,10 +5,10 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.user.fadhlanhadaina.moviecataloguesubmission.data.model.TVSeries
+import com.user.fadhlanhadaina.core.model.TVSeries
 import com.user.fadhlanhadaina.moviecataloguesubmission.databinding.RowDataBinding
 import com.user.fadhlanhadaina.moviecataloguesubmission.ui.activities.detail.tvseries.DetailTVSeriesActivity
-import com.user.fadhlanhadaina.moviecataloguesubmission.utils.ExtFun.load
+import com.user.fadhlanhadaina.core.util.ExtFun.load
 
 class TVSeriesListAdapter(private val tvSerieLists: ArrayList<TVSeries>): RecyclerView.Adapter<TVSeriesListAdapter.ViewHolder>() {
 

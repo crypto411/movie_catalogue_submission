@@ -18,7 +18,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieCatalogueSubmission">
-        <activity android:name=".ui.activities.favorite.FavoriteActivity"/>
         <activity android:name=".ui.activities.detail.tvseries.DetailTVSeriesActivity" />
         <activity android:name=".ui.activities.detail.movie.DetailMovieActivity" />
         <activity android:name=".ui.activities.home.HomeActivity" />

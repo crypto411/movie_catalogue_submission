@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.user.fadhlanhadaina.moviecataloguesubmission.databinding.MovieFragmentBinding
-import com.user.fadhlanhadaina.moviecataloguesubmission.utils.ExtFun.show
+import com.user.fadhlanhadaina.core.util.ExtFun.show
 import com.user.fadhlanhadaina.moviecataloguesubmission.viewmodel.ViewModelFactory
 
 class MovieFragment : Fragment() {
@@ -21,7 +21,7 @@ class MovieFragment : Fragment() {
     private lateinit var viewModel: MovieViewModel
     private lateinit var binding: MovieFragmentBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = MovieFragmentBinding.inflate(layoutInflater, container, false)
         return binding.root
     }

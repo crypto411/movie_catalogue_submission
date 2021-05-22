@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.user.fadhlanhadaina.moviecataloguesubmission.databinding.TVSeriesFragmentBinding
-import com.user.fadhlanhadaina.moviecataloguesubmission.utils.ExtFun.show
+import com.user.fadhlanhadaina.core.util.ExtFun.show
 import com.user.fadhlanhadaina.moviecataloguesubmission.viewmodel.ViewModelFactory
 
 class TVSeriesFragment : Fragment() {

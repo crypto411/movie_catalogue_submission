@@ -9,10 +9,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.user.fadhlanhadaina.moviecataloguesubmission.R
-import com.user.fadhlanhadaina.moviecataloguesubmission.data.model.MovieFavorite
+import com.user.fadhlanhadaina.core.model.MovieFavorite
 import com.user.fadhlanhadaina.moviecataloguesubmission.databinding.ActivityDetailBinding
-import com.user.fadhlanhadaina.moviecataloguesubmission.utils.ExtFun.load
-import com.user.fadhlanhadaina.moviecataloguesubmission.utils.ExtFun.show
+import com.user.fadhlanhadaina.core.util.ExtFun.load
+import com.user.fadhlanhadaina.core.util.ExtFun.show
 import com.user.fadhlanhadaina.moviecataloguesubmission.viewmodel.ViewModelFactory
 
 class DetailMovieActivity : AppCompatActivity() {

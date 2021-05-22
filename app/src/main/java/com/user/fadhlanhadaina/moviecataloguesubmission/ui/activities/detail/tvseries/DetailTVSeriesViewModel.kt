@@ -3,9 +3,9 @@ package com.user.fadhlanhadaina.moviecataloguesubmission.ui.activities.detail.tv
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.user.fadhlanhadaina.moviecataloguesubmission.data.source.MovieCatalogueRepository
-import com.user.fadhlanhadaina.moviecataloguesubmission.data.model.TVSeries
-import com.user.fadhlanhadaina.moviecataloguesubmission.data.model.TVSeriesFavorite
+import com.user.fadhlanhadaina.core.source.MovieCatalogueRepository
+import com.user.fadhlanhadaina.core.model.TVSeries
+import com.user.fadhlanhadaina.core.model.TVSeriesFavorite
 import kotlinx.coroutines.launch
 
 class DetailTVSeriesViewModel(private val movieCatalogueRepository: MovieCatalogueRepository): ViewModel() {

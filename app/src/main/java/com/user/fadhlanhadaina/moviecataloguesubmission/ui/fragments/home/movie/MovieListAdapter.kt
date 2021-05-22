@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.user.fadhlanhadaina.moviecataloguesubmission.ui.activities.detail.movie.DetailMovieActivity
-import com.user.fadhlanhadaina.moviecataloguesubmission.data.model.Movie
+import com.user.fadhlanhadaina.core.model.Movie
 import com.user.fadhlanhadaina.moviecataloguesubmission.databinding.RowDataBinding
-import com.user.fadhlanhadaina.moviecataloguesubmission.utils.ExtFun.load
+import com.user.fadhlanhadaina.core.util.ExtFun.load
 
 class MovieListAdapter(private val movieLists: ArrayList<Movie>): RecyclerView.Adapter<MovieListAdapter.ViewHolder>() {
 

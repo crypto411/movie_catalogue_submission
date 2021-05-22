@@ -8,7 +8,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import com.user.fadhlanhadaina.moviecataloguesubmission.R
 import com.user.fadhlanhadaina.moviecataloguesubmission.databinding.ActivityHomeBinding
-import com.user.fadhlanhadaina.moviecataloguesubmission.ui.activities.favorite.FavoriteActivity
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var bind: ActivityHomeBinding
@@ -26,8 +25,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
             R.id.menuFavorite -> {
-                val intent = Intent(this@HomeActivity, FavoriteActivity::class.java)
-                startActivity(intent)
+                moveToFavoriteActivity()
                 true
             }
             else -> {
@@ -41,5 +39,11 @@ class HomeActivity : AppCompatActivity() {
         val menuInflater : MenuInflater = menuInflater
         menuInflater.inflate(R.menu.home, menu)
         return true
+    }
+
+    // Dynamic Feature
+    private fun moveToFavoriteActivity() {
+        val intent = Intent(this@HomeActivity, Class.forName("com.user.fadhlanhadaina.favorite_feature.activity.FavoriteActivity"))
+        startActivity(intent)
     }
 }

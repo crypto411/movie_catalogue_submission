@@ -1,2 +1,4 @@
 include ':app'
 rootProject.name = "Movie Catalogue Submission"
+include ':core'
+include ':favorite_feature'
