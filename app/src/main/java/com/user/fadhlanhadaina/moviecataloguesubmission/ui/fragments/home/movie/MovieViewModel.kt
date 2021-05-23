@@ -1,17 +1,10 @@
 package com.user.fadhlanhadaina.moviecataloguesubmission.ui.fragments.home.movie
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.user.fadhlanhadaina.core.domain.model.Movie
+import androidx.lifecycle.asLiveData
 import com.user.fadhlanhadaina.core.domain.usecase.MovieCatalogueUseCase
 
 class MovieViewModel @ViewModelInject constructor(private val movieCatalogueUseCase: MovieCatalogueUseCase) : ViewModel() {
-    private var movieLists: LiveData<ArrayList<Movie>>? = null
-
-    fun getMovies(): LiveData<ArrayList<Movie>>? {
-        if(movieLists == null)
-            movieLists = movieCatalogueUseCase.getMovies()
-        return movieLists
-    }
+    fun getMovies() = movieCatalogueUseCase.getMovies().asLiveData()
 }

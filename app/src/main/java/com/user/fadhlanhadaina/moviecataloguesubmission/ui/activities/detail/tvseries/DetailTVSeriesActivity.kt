@@ -46,7 +46,7 @@ class DetailTVSeriesActivity : AppCompatActivity() {
         binding.progressBar.show(true)
         val id = intent.getIntExtra(EXTRA_ID, 0)
         val tvSeries = detailTVSeriesViewModel.getTVSeries(id)
-        tvSeries?.observe(this) { it ->
+        tvSeries.observe(this) { it ->
             binding.progressBar.show(false)
             binding.ivMovieDetail.load(it.posterUrl)
 
@@ -71,10 +71,13 @@ class DetailTVSeriesActivity : AppCompatActivity() {
                 setFavorite(favorited)
             }
         }
-        if(detailTVSeriesViewModel.isFavoriteTVSeries(id)) {
-            favorited = true
-            binding.btnFavorite.toggle(favorited)
-        }
+
+        detailTVSeriesViewModel.isFavoriteTVSeries(id).observe(this, {
+            if(it != null) {
+                favorited = true
+                binding.btnFavorite.toggle(favorited)
+            }
+        })
     }
 
     private fun FloatingActionButton.toggle(state: Boolean) {

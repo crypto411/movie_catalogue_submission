@@ -1,21 +1,19 @@
 package com.user.fadhlanhadaina.core.data.source
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PagedList
 import com.user.fadhlanhadaina.core.data.source.remote.RemoteDataSource
 import com.user.fadhlanhadaina.core.domain.model.Movie
 import com.user.fadhlanhadaina.core.domain.model.entity.MovieFavoriteEntity
 import com.user.fadhlanhadaina.core.domain.model.TVSeries
 import com.user.fadhlanhadaina.core.domain.model.entity.TVSeriesFavoriteEntity
 import com.user.fadhlanhadaina.core.data.source.local.LocalDataSource
-import com.user.fadhlanhadaina.core.data.source.remote.response.DetailMovieResponse
-import com.user.fadhlanhadaina.core.data.source.remote.response.DetailTVSeriesResponse
 import com.user.fadhlanhadaina.core.domain.repository.IMovieCatalogueRepository
 import com.user.fadhlanhadaina.core.util.Mapper.mapToMovie
 import com.user.fadhlanhadaina.core.util.Mapper.mapToTVSeries
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -24,57 +22,36 @@ import javax.inject.Singleton
 class MovieCatalogueRepository @Inject constructor(private val remoteDataSource: RemoteDataSource, private val localDataSource: LocalDataSource):
     IMovieCatalogueRepository {
 
-    override fun getMovies(): LiveData<ArrayList<Movie>> {
-        val movieLiveData = MutableLiveData<ArrayList<Movie>>()
-        remoteDataSource.getMovies(object: RemoteDataSource.PopularMovieCallback {
-            override fun onMoviesReceived(movieResponse: ArrayList<DetailMovieResponse>) {
-                movieLiveData.postValue(movieResponse.mapToMovie())
-            }
-        })
-        return movieLiveData
+    override fun getMovies(): Flow<ArrayList<Movie>> = flow {
+        val flow = remoteDataSource.getMovies()
+        val list = flow.first().mapToMovie()
+        emit(list)
+    }.flowOn(Dispatchers.IO)
+
+    override fun getMovieDetail(id: Int): Flow<Movie> = flow {
+        val flow = remoteDataSource.getMovieDetail(id)
+        val model = flow.first().mapToMovie()
+        emit(model)
+    }.flowOn(Dispatchers.IO)
+
+    override fun getTVSeries(): Flow<ArrayList<TVSeries>> = flow {
+        val flow = remoteDataSource.getTVSeries()
+        val list = flow.first().mapToTVSeries()
+        emit(list)
+    }.flowOn(Dispatchers.IO)
+
+    override fun getTVSeriesDetail(id: Int): Flow<TVSeries> = flow {
+        val flow = remoteDataSource.getTVSeriesDetail(id)
+        val model = flow.first().mapToTVSeries()
+        emit(model)
+    }.flowOn(Dispatchers.IO)
+
+    override fun getFavoriteMovies(): Flow<List<MovieFavoriteEntity>> {
+        return localDataSource.getAllFavoriteMovie()
     }
 
-    override fun getMovieDetail(id: Int): LiveData<Movie> {
-        val movieLiveData = MutableLiveData<Movie>()
-        remoteDataSource.getMovieDetail(id, object: RemoteDataSource.MovieDetailCallback {
-            override fun onDetailMovieReceived(detailMovieResponse: DetailMovieResponse) {
-                movieLiveData.postValue(detailMovieResponse.mapToMovie())
-            }
-        })
-        return movieLiveData
-    }
-
-    override fun getTVSeries(): LiveData<ArrayList<TVSeries>> {
-        val tvSeriesLiveData = MutableLiveData<ArrayList<TVSeries>>()
-        remoteDataSource.getTVSeries(object: RemoteDataSource.PopularTVSeriesCallback {
-            override fun onTVSeriesReceived(tvSeriesResponse: ArrayList<DetailTVSeriesResponse>) {
-                tvSeriesLiveData.postValue(tvSeriesResponse.mapToTVSeries())
-            }
-        })
-        return tvSeriesLiveData
-    }
-
-    override fun getTVSeriesDetail(id: Int): LiveData<TVSeries> {
-        val tvSeriesLiveData = MutableLiveData<TVSeries>()
-        remoteDataSource.getTVSeriesDetail(id, object: RemoteDataSource.TVSeriesDetailCallback {
-            override fun onTVSeriesReceived(detailTVSeriesResponse: DetailTVSeriesResponse) {
-                tvSeriesLiveData.postValue(detailTVSeriesResponse.mapToTVSeries())
-            }
-        })
-        return tvSeriesLiveData
-    }
-
-    override fun getFavoriteMovies(): LiveData<PagedList<MovieFavoriteEntity>> {
-        val config = PagedList.Config.Builder()
-            .setEnablePlaceholders(false)
-            .setInitialLoadSizeHint(4)
-            .setPageSize(4)
-            .build()
-        return LivePagedListBuilder(localDataSource.getAllFavoriteMovie(), config).build()
-    }
-
-    override fun isFavoriteMovieExist(id: Int): Boolean {
-        return (localDataSource.getFavoriteMovieById(id) != null)
+    override fun isFavoriteMovieExist(id: Int): Flow<MovieFavoriteEntity?> {
+        return localDataSource.getFavoriteMovieById(id)
     }
 
     override suspend fun setFavoriteMovie(favoriteMovieEntity: MovieFavoriteEntity) {
@@ -89,17 +66,12 @@ class MovieCatalogueRepository @Inject constructor(private val remoteDataSource:
         }
     }
 
-    override fun getFavoriteTVSeries(): LiveData<PagedList<TVSeriesFavoriteEntity>> {
-        val config = PagedList.Config.Builder()
-            .setEnablePlaceholders(false)
-            .setInitialLoadSizeHint(4)
-            .setPageSize(4)
-            .build()
-        return LivePagedListBuilder(localDataSource.getAllFavoriteTVSeries(), config).build()
+    override fun getFavoriteTVSeries(): Flow<List<TVSeriesFavoriteEntity>> {
+        return localDataSource.getAllFavoriteTVSeries()
     }
 
-    override fun isFavoriteTVSeriesExist(id: Int): Boolean {
-        return (localDataSource.getFavoriteTVSeriesById(id) != null)
+    override fun isFavoriteTVSeriesExist(id: Int): Flow<TVSeriesFavoriteEntity?> {
+        return localDataSource.getFavoriteTVSeriesById(id)
     }
 
     override suspend fun setFavoriteTVSeries(favoriteTVSeriesFavoriteEntity: TVSeriesFavoriteEntity) {

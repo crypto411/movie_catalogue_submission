@@ -6,17 +6,17 @@ import com.user.fadhlanhadaina.core.domain.model.Movie
 import com.user.fadhlanhadaina.core.domain.model.TVSeries
 
 object Mapper {
-    fun ArrayList<DetailMovieResponse>.mapToMovie(): ArrayList<Movie> {
+    fun List<DetailMovieResponse>.mapToMovie(): ArrayList<Movie> {
         val arrayList = ArrayList<Movie>()
-        this.forEach { detailMovieResponse ->
+        this.map { detailMovieResponse ->
             arrayList.add(detailMovieResponse.mapToMovie())
         }
         return arrayList
     }
 
-    fun ArrayList<DetailTVSeriesResponse>.mapToTVSeries(): ArrayList<TVSeries> {
+    fun List<DetailTVSeriesResponse>.mapToTVSeries(): ArrayList<TVSeries> {
         val arrayList = ArrayList<TVSeries>()
-        this.forEach { detailTVSeriesResponse ->
+        this.map { detailTVSeriesResponse ->
             arrayList.add(detailTVSeriesResponse.mapToTVSeries())
         }
         return arrayList

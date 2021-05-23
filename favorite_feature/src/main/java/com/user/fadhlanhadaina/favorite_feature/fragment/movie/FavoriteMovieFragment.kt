@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
-import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.user.fadhlanhadaina.core.domain.model.entity.MovieFavoriteEntity
 import com.user.fadhlanhadaina.favorite_feature.databinding.FavoriteMovieFragmentBinding
@@ -63,8 +62,8 @@ class FavoriteMovieFragment : Fragment() {
             rvFavMovie.adapter = favoriteMovieAdapter
         }
         viewModel.getAllFavoriteMovie().observe(viewLifecycleOwner) {
-            if(it != emptyList<PagedList<MovieFavoriteEntity>>())
-                favoriteMovieAdapter.submitList(it)
+            if(it != emptyList<MovieFavoriteEntity>())
+                favoriteMovieAdapter.setData(it)
             else
                 Toast.makeText(context, "Favorite Movie not found!", Toast.LENGTH_LONG).show()
         }

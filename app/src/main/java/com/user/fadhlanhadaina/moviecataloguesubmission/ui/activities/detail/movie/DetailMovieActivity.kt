@@ -47,7 +47,7 @@ class DetailMovieActivity : AppCompatActivity() {
         binding.btnFavorite.isEnabled = false
         val id = intent.getIntExtra(EXTRA_ID, 0)
         val movieLiveData = detailMovieViewModel.getMovie(id)
-        movieLiveData?.observe(this) { it ->
+        movieLiveData.observe(this) { it ->
             binding.progressBar.show(false)
             binding.ivMovieDetail.load(it.posterUrl)
 
@@ -71,10 +71,12 @@ class DetailMovieActivity : AppCompatActivity() {
                 setFavorite(favorited)
             }
         }
-        if(detailMovieViewModel.isFavoriteMovie(id)) {
-            favorited = true
-            binding.btnFavorite.toggle(favorited)
-        }
+        detailMovieViewModel.isFavoriteMovie(id).observe(this, {
+            if(it != null) {
+                favorited = true
+                binding.btnFavorite.toggle(favorited)
+            }
+        })
     }
 
     private fun FloatingActionButton.toggle(state: Boolean) {

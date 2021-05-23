@@ -1,98 +1,37 @@
 package com.user.fadhlanhadaina.core.data.source.remote
 
-import android.util.Log
 import com.user.fadhlanhadaina.core.data.source.remote.network.ApiResource
 import com.user.fadhlanhadaina.core.data.source.remote.response.DetailMovieResponse
 import com.user.fadhlanhadaina.core.data.source.remote.response.DetailTVSeriesResponse
-import com.user.fadhlanhadaina.core.data.source.remote.response.MovieResponse
-import com.user.fadhlanhadaina.core.data.source.remote.response.TVSeriesResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class RemoteDataSource @Inject constructor(private val clientApi: ApiResource) {
 
-    fun getMovies(callback: PopularMovieCallback) {
+    fun getMovies(): Flow<ArrayList<DetailMovieResponse>> = flow {
+        val response = clientApi.getMovieLists()
+        val results = response.results
+        emit(results)
+    }.flowOn(Dispatchers.IO)
 
-        clientApi.getMovieLists().enqueue(object: Callback<MovieResponse> {
-            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
-                response.body().let { it?.results?.let { it1 -> callback.onMoviesReceived(it1) } }
-            }
+    fun getMovieDetail(id: Int): Flow<DetailMovieResponse> = flow {
+        val results = clientApi.getMovieDetail(id)
+        emit(results)
+    }.flowOn(Dispatchers.IO)
 
-            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                Log.d("getMovieLists", t.localizedMessage!!)
-            }
+    fun getTVSeries(): Flow<ArrayList<DetailTVSeriesResponse>> = flow {
+        val response = clientApi.getTVSerieLists()
+        val results = response.results
+        emit(results)
+    }.flowOn(Dispatchers.IO)
 
-        })
-    }
-
-    fun getMovieDetail(id: Int, callback: MovieDetailCallback) {
-
-        clientApi.getMovieDetail(id).enqueue(object: Callback<DetailMovieResponse> {
-            override fun onResponse(call: Call<DetailMovieResponse>, response: Response<DetailMovieResponse>) {
-                response.body().let { movie ->
-                    movie?.let {it ->
-                        callback.onDetailMovieReceived(it) }
-                }
-            }
-
-            override fun onFailure(call: Call<DetailMovieResponse>, t: Throwable) {
-                Log.d("getMovieDetail", t.localizedMessage!!)
-            }
-        })
-    }
-
-    fun getTVSeries(callback: PopularTVSeriesCallback) {
-
-        clientApi.getTVSerieLists().enqueue(object: Callback<TVSeriesResponse> {
-            override fun onResponse(call: Call<TVSeriesResponse>, response: Response<TVSeriesResponse>) {
-                response.body().let { tvSerieLists ->
-                    tvSerieLists?.let {
-                        callback.onTVSeriesReceived(it.results)
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<TVSeriesResponse>, t: Throwable) {
-                Log.d("getTVSeriesList", t.localizedMessage!!)
-            }
-
-        })
-    }
-
-    fun getTVSeriesDetail(id: Int, callback: TVSeriesDetailCallback) {
-
-        clientApi.getTVSeriesDetail(id).enqueue(object: Callback<DetailTVSeriesResponse> {
-            override fun onResponse(call: Call<DetailTVSeriesResponse>, response: Response<DetailTVSeriesResponse>) {
-                response.body().let { tvSeries ->
-                    tvSeries?.let {
-                        callback.onTVSeriesReceived(it)
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<DetailTVSeriesResponse>, t: Throwable) {
-                Log.d("getTVSeriesDetail", t.localizedMessage!!)
-            }
-        })
-    }
-
-    interface PopularMovieCallback {
-        fun onMoviesReceived(movieResponse: ArrayList<DetailMovieResponse>)
-    }
-
-    interface MovieDetailCallback {
-        fun onDetailMovieReceived(detailMovieResponse: DetailMovieResponse)
-    }
-
-    interface PopularTVSeriesCallback {
-        fun onTVSeriesReceived(tvSeriesResponse: ArrayList<DetailTVSeriesResponse>)
-    }
-
-    interface TVSeriesDetailCallback {
-        fun onTVSeriesReceived(detailTVSeriesResponse: DetailTVSeriesResponse)
-    }
+    fun getTVSeriesDetail(id: Int): Flow<DetailTVSeriesResponse> = flow {
+        val results = clientApi.getTVSeriesDetail(id)
+        emit(results)
+    }.flowOn(Dispatchers.IO)
 }

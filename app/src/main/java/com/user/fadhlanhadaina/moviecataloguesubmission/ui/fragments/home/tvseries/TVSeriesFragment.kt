@@ -37,7 +37,7 @@ class TVSeriesFragment : Fragment() {
     private fun showList() {
         binding.progressBarTV.show(true)
         binding.rvTVSeriesData.layoutManager = LinearLayoutManager(this.context)
-        viewModel.getTVSeries()?.observe(viewLifecycleOwner) {
+        viewModel.getTVSeries().observe(viewLifecycleOwner) {
             binding.progressBarTV.show(false)
             binding.rvTVSeriesData.adapter = TVSeriesListAdapter(it)
         }

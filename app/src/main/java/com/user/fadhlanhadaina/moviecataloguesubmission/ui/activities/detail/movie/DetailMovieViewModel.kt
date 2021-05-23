@@ -1,22 +1,13 @@
 package com.user.fadhlanhadaina.moviecataloguesubmission.ui.activities.detail.movie
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.user.fadhlanhadaina.core.domain.model.Movie
+import androidx.lifecycle.*
 import com.user.fadhlanhadaina.core.domain.model.entity.MovieFavoriteEntity
 import com.user.fadhlanhadaina.core.domain.usecase.MovieCatalogueUseCase
 import kotlinx.coroutines.launch
 
 class DetailMovieViewModel @ViewModelInject constructor(private val movieCatalogueUseCase: MovieCatalogueUseCase): ViewModel() {
-    private var movie: LiveData<Movie>? = null
-
-    fun getMovie(id: Int): LiveData<Movie>? {
-        if(movie == null)
-            movie = movieCatalogueUseCase.getMovieDetail(id)
-        return movie
-    }
+    fun getMovie(id: Int) = movieCatalogueUseCase.getMovieDetail(id).asLiveData()
 
     fun insertFavoriteMovie(movieFavoriteEntity: MovieFavoriteEntity) = viewModelScope.launch {
         movieCatalogueUseCase.setFavoriteMovie(movieFavoriteEntity)
@@ -26,5 +17,5 @@ class DetailMovieViewModel @ViewModelInject constructor(private val movieCatalog
         movieCatalogueUseCase.deleteFavoriteMovie(movieFavoriteEntity)
     }
 
-    fun isFavoriteMovie(id: Int) = movieCatalogueUseCase.isFavoriteMovieExist(id)
+    fun isFavoriteMovie(id: Int) = movieCatalogueUseCase.isFavoriteMovieExist(id).asLiveData()
 }

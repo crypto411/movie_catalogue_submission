@@ -4,26 +4,18 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.user.fadhlanhadaina.core.domain.model.entity.TVSeriesFavoriteEntity
 import com.user.fadhlanhadaina.moviecataloguesubmission.databinding.RowDataBinding
 import com.user.fadhlanhadaina.moviecataloguesubmission.ui.activities.detail.tvseries.DetailTVSeriesActivity
 import com.user.fadhlanhadaina.core.util.ExtFun.load
 
-class FavoriteTVSeriesAdapter: PagedListAdapter<TVSeriesFavoriteEntity, FavoriteTVSeriesAdapter.ViewHolder>(DIFFERENT_CALLBACK) {
+class FavoriteTVSeriesAdapter: RecyclerView.Adapter<FavoriteTVSeriesAdapter.ViewHolder>(){
+    private var favoriteTVSeries: List<TVSeriesFavoriteEntity> = mutableListOf()
 
-    companion object {
-        private val DIFFERENT_CALLBACK: DiffUtil.ItemCallback<TVSeriesFavoriteEntity> = object : DiffUtil.ItemCallback<TVSeriesFavoriteEntity>() {
-            override fun areItemsTheSame(oldTVSeriesFavoriteEntity: TVSeriesFavoriteEntity, newTVSeriesFavoriteEntity: TVSeriesFavoriteEntity): Boolean {
-                return oldTVSeriesFavoriteEntity.title == newTVSeriesFavoriteEntity.title && oldTVSeriesFavoriteEntity.date == newTVSeriesFavoriteEntity.date
-            }
-            @SuppressLint("DiffUtilEquals")
-            override fun areContentsTheSame(oldTVSeriesFavoriteEntity: TVSeriesFavoriteEntity, newTVSeriesFavoriteEntity: TVSeriesFavoriteEntity): Boolean {
-                return oldTVSeriesFavoriteEntity == newTVSeriesFavoriteEntity
-            }
-        }
+    fun setData(favoriteTVSeries: List<TVSeriesFavoriteEntity>) {
+        this.favoriteTVSeries = favoriteTVSeries
+        notifyDataSetChanged()
     }
 
     inner class ViewHolder(private val binding: RowDataBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -47,7 +39,7 @@ class FavoriteTVSeriesAdapter: PagedListAdapter<TVSeriesFavoriteEntity, Favorite
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val movieFavorite = getItem(position)
+        val movieFavorite = favoriteTVSeries.get(position)
         if(movieFavorite != null)
             holder.bind(movieFavorite)
     }
@@ -56,4 +48,6 @@ class FavoriteTVSeriesAdapter: PagedListAdapter<TVSeriesFavoriteEntity, Favorite
         val binding = RowDataBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
+
+    override fun getItemCount(): Int = favoriteTVSeries.size
 }

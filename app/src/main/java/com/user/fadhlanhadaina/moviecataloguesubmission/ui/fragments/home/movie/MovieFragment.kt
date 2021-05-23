@@ -37,7 +37,7 @@ class MovieFragment : Fragment() {
         binding.progressBarMovie.show(true)
         binding.rvMovieData.layoutManager = LinearLayoutManager(this.context)
         val movies = viewModel.getMovies()
-        movies?.observe(viewLifecycleOwner) {
+        movies.observe(viewLifecycleOwner) {
             binding.progressBarMovie.show(false)
             binding.rvMovieData.adapter = MovieListAdapter(it)
         }

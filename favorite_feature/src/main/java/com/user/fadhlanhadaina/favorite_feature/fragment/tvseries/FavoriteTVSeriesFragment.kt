@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
-import androidx.paging.PagedList
 import com.user.fadhlanhadaina.core.domain.model.entity.MovieFavoriteEntity
 import com.user.fadhlanhadaina.favorite_feature.databinding.FavoriteTVSeriesFragmentBinding
 import com.user.fadhlanhadaina.favorite_feature.di.DaggerAppComponent
@@ -62,8 +61,8 @@ class FavoriteTVSeriesFragment : Fragment() {
             rvFavTVSeries.adapter = favoriteTVSeriesAdapter
         }
         viewModel.getAllFavoriteTVSeries().observe(viewLifecycleOwner) {
-            if(it != emptyList<PagedList<MovieFavoriteEntity>>())
-                favoriteTVSeriesAdapter.submitList(it)
+            if(it != emptyList<MovieFavoriteEntity>())
+                favoriteTVSeriesAdapter.setData(it)
             else
                 Toast.makeText(context, "Favorite TVSeries not found!", Toast.LENGTH_LONG).show()
         }

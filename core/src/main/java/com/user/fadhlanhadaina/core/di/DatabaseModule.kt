@@ -22,7 +22,6 @@ class DatabaseModule {
             FavoriteDatabase::class.java,
             "favorite.db"
         )
-        .allowMainThreadQueries()
         .fallbackToDestructiveMigration()
         .build()
 

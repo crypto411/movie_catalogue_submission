@@ -1,35 +1,35 @@
 package com.user.fadhlanhadaina.core.data.source.local.database
 
-import androidx.paging.DataSource
 import androidx.room.*
 import com.user.fadhlanhadaina.core.domain.model.entity.MovieFavoriteEntity
 import com.user.fadhlanhadaina.core.domain.model.entity.TVSeriesFavoriteEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FavoriteDao {
 
     @Query("SELECT * FROM moviefavoriteentity")
-    fun getAllMovies(): DataSource.Factory<Int, MovieFavoriteEntity>
+    fun getAllMovies(): Flow<List<MovieFavoriteEntity>>
 
     @Query("SELECT * FROM moviefavoriteentity WHERE id = :id LIMIT 1")
-    fun getMovieById(id: Int): MovieFavoriteEntity?
+    fun getMovieById(id: Int): Flow<MovieFavoriteEntity?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(movieEntity: MovieFavoriteEntity)
+    suspend fun insert(movieEntity: MovieFavoriteEntity)
 
     @Delete
-    fun delete(movieEntity: MovieFavoriteEntity)
+    suspend fun delete(movieEntity: MovieFavoriteEntity)
 
 /*================================================================================================*/
     @Query("SELECT * FROM tvseriesfavoriteentity")
-    fun getAllTVSeries(): DataSource.Factory<Int, TVSeriesFavoriteEntity>
+    fun getAllTVSeries(): Flow<List<TVSeriesFavoriteEntity>>
 
     @Query("SELECT * FROM tvseriesfavoriteentity WHERE id = :id LIMIT 1")
-    fun getTVSeriesById(id: Int): TVSeriesFavoriteEntity?
+    fun getTVSeriesById(id: Int): Flow<TVSeriesFavoriteEntity?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(tvSeriesEntity: TVSeriesFavoriteEntity)
+    suspend fun insert(tvSeriesEntity: TVSeriesFavoriteEntity)
 
     @Delete
-    fun delete(tvSeriesEntity: TVSeriesFavoriteEntity)
+    suspend fun delete(tvSeriesEntity: TVSeriesFavoriteEntity)
 }
