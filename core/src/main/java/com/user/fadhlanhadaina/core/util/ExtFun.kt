@@ -5,6 +5,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.user.fadhlanhadaina.core.BuildConfig
 import com.user.fadhlanhadaina.core.R
 
@@ -21,5 +22,12 @@ object ExtFun {
             this.visibility = View.VISIBLE
         else
             this.visibility = View.INVISIBLE
+    }
+
+    fun FloatingActionButton.toggle(state: Boolean) {
+        if(state)
+            this.setImageResource(R.drawable.ic_baseline_favorite_24_red)
+        else
+            this.setImageResource(R.drawable.ic_baseline_favorite_border_24)
     }
 }

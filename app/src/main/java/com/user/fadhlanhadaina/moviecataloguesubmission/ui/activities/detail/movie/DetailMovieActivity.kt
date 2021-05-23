@@ -3,16 +3,14 @@ package com.user.fadhlanhadaina.moviecataloguesubmission.ui.activities.detail.mo
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.observe
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.user.fadhlanhadaina.moviecataloguesubmission.R
 import com.user.fadhlanhadaina.core.data.source.local.entity.MovieFavoriteEntity
 import com.user.fadhlanhadaina.moviecataloguesubmission.databinding.ActivityDetailBinding
 import com.user.fadhlanhadaina.core.util.ExtFun.load
 import com.user.fadhlanhadaina.core.util.ExtFun.show
+import com.user.fadhlanhadaina.core.util.ExtFun.toggle
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -79,13 +77,6 @@ class DetailMovieActivity : AppCompatActivity() {
         })
     }
 
-    private fun FloatingActionButton.toggle(state: Boolean) {
-        if(state)
-            this.setImageResource(R.drawable.ic_baseline_favorite_24_red)
-        else
-            this.setImageResource(R.drawable.ic_baseline_favorite_border_24)
-    }
-
     @SuppressLint("ShowToast")
     private fun setFavorite(boolean: Boolean) {
         if(movieFavoriteEntity != null) {
@@ -100,7 +91,6 @@ class DetailMovieActivity : AppCompatActivity() {
 
             binding.btnFavorite.toggle(boolean)
         }
-        Log.d("boolFavorite", boolean.toString())
     }
 
     override fun onSupportNavigateUp(): Boolean {
