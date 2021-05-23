@@ -3,7 +3,9 @@ package com.user.fadhlanhadaina.favorite_feature.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.user.fadhlanhadaina.favorite_feature.databinding.ActivityFavoriteBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FavoriteActivity : AppCompatActivity() {
     private lateinit var bind: ActivityFavoriteBinding
 

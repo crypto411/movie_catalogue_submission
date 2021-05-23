@@ -6,9 +6,9 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.user.fadhlanhadaina.core.data.source.remote.RemoteDataSource
 import com.user.fadhlanhadaina.core.domain.model.Movie
-import com.user.fadhlanhadaina.core.domain.model.MovieFavorite
+import com.user.fadhlanhadaina.core.domain.model.entity.MovieFavoriteEntity
 import com.user.fadhlanhadaina.core.domain.model.TVSeries
-import com.user.fadhlanhadaina.core.domain.model.TVSeriesFavorite
+import com.user.fadhlanhadaina.core.domain.model.entity.TVSeriesFavoriteEntity
 import com.user.fadhlanhadaina.core.data.source.local.LocalDataSource
 import com.user.fadhlanhadaina.core.data.source.remote.response.DetailMovieResponse
 import com.user.fadhlanhadaina.core.data.source.remote.response.DetailTVSeriesResponse
@@ -17,18 +17,12 @@ import com.user.fadhlanhadaina.core.util.Mapper.mapToMovie
 import com.user.fadhlanhadaina.core.util.Mapper.mapToTVSeries
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class MovieCatalogueRepository(private val remoteDataSource: RemoteDataSource, private val localDataSource: LocalDataSource):
+@Singleton
+class MovieCatalogueRepository @Inject constructor(private val remoteDataSource: RemoteDataSource, private val localDataSource: LocalDataSource):
     IMovieCatalogueRepository {
-
-    companion object {
-        @Volatile
-        private var instance: IMovieCatalogueRepository? = null
-        fun newInstance(remoteData: RemoteDataSource, localData: LocalDataSource): IMovieCatalogueRepository =
-            instance ?: synchronized(this) {
-                instance ?: MovieCatalogueRepository(remoteData, localData).apply { instance = this }
-            }
-    }
 
     override fun getMovies(): LiveData<ArrayList<Movie>> {
         val movieLiveData = MutableLiveData<ArrayList<Movie>>()
@@ -70,7 +64,7 @@ class MovieCatalogueRepository(private val remoteDataSource: RemoteDataSource, p
         return tvSeriesLiveData
     }
 
-    override fun getFavoriteMovies(): LiveData<PagedList<MovieFavorite>> {
+    override fun getFavoriteMovies(): LiveData<PagedList<MovieFavoriteEntity>> {
         val config = PagedList.Config.Builder()
             .setEnablePlaceholders(false)
             .setInitialLoadSizeHint(4)
@@ -83,19 +77,19 @@ class MovieCatalogueRepository(private val remoteDataSource: RemoteDataSource, p
         return (localDataSource.getFavoriteMovieById(id) != null)
     }
 
-    override suspend fun setFavoriteMovie(favoriteMovie: MovieFavorite) {
+    override suspend fun setFavoriteMovie(favoriteMovieEntity: MovieFavoriteEntity) {
         withContext(Dispatchers.IO) {
-            localDataSource.insertFavoriteMovie(favoriteMovie)
+            localDataSource.insertFavoriteMovie(favoriteMovieEntity)
         }
     }
 
-    override suspend fun deleteFavoriteMovie(favoriteMovie: MovieFavorite) {
+    override suspend fun deleteFavoriteMovie(favoriteMovieEntity: MovieFavoriteEntity) {
         withContext(Dispatchers.IO) {
-            localDataSource.deleteFavoriteMovie(favoriteMovie)
+            localDataSource.deleteFavoriteMovie(favoriteMovieEntity)
         }
     }
 
-    override fun getFavoriteTVSeries(): LiveData<PagedList<TVSeriesFavorite>> {
+    override fun getFavoriteTVSeries(): LiveData<PagedList<TVSeriesFavoriteEntity>> {
         val config = PagedList.Config.Builder()
             .setEnablePlaceholders(false)
             .setInitialLoadSizeHint(4)
@@ -108,15 +102,15 @@ class MovieCatalogueRepository(private val remoteDataSource: RemoteDataSource, p
         return (localDataSource.getFavoriteTVSeriesById(id) != null)
     }
 
-    override suspend fun setFavoriteTVSeries(favoriteTVSeriesFavorite: TVSeriesFavorite) {
+    override suspend fun setFavoriteTVSeries(favoriteTVSeriesFavoriteEntity: TVSeriesFavoriteEntity) {
         withContext(Dispatchers.IO) {
-            localDataSource.insertFavoriteTVSeries(favoriteTVSeriesFavorite)
+            localDataSource.insertFavoriteTVSeries(favoriteTVSeriesFavoriteEntity)
         }
     }
 
-    override suspend fun deleteFavoriteTVSeries(favoriteTVSeriesFavorite: TVSeriesFavorite) {
+    override suspend fun deleteFavoriteTVSeries(favoriteTVSeriesFavoriteEntity: TVSeriesFavoriteEntity) {
         withContext(Dispatchers.IO) {
-            localDataSource.deleteFavoriteTVSeries(favoriteTVSeriesFavorite)
+            localDataSource.deleteFavoriteTVSeries(favoriteTVSeriesFavoriteEntity)
         }
     }
 }

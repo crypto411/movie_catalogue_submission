@@ -3,9 +3,9 @@ package com.user.fadhlanhadaina.core.domain.repository
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import com.user.fadhlanhadaina.core.domain.model.Movie
-import com.user.fadhlanhadaina.core.domain.model.MovieFavorite
+import com.user.fadhlanhadaina.core.domain.model.entity.MovieFavoriteEntity
 import com.user.fadhlanhadaina.core.domain.model.TVSeries
-import com.user.fadhlanhadaina.core.domain.model.TVSeriesFavorite
+import com.user.fadhlanhadaina.core.domain.model.entity.TVSeriesFavoriteEntity
 
 interface IMovieCatalogueRepository {
     fun getMovies(): LiveData<ArrayList<Movie>>
@@ -13,13 +13,13 @@ interface IMovieCatalogueRepository {
     fun getTVSeries(): LiveData<ArrayList<TVSeries>>
     fun getTVSeriesDetail(id: Int): LiveData<TVSeries>
 
-    fun getFavoriteMovies(): LiveData<PagedList<MovieFavorite>>
+    fun getFavoriteMovies(): LiveData<PagedList<MovieFavoriteEntity>>
     fun isFavoriteMovieExist(id: Int): Boolean
-    suspend fun setFavoriteMovie(favoriteMovie: MovieFavorite)
-    suspend fun deleteFavoriteMovie(favoriteMovie: MovieFavorite)
+    suspend fun setFavoriteMovie(favoriteMovieEntity: MovieFavoriteEntity)
+    suspend fun deleteFavoriteMovie(favoriteMovieEntity: MovieFavoriteEntity)
 
-    fun getFavoriteTVSeries(): LiveData<PagedList<TVSeriesFavorite>>
+    fun getFavoriteTVSeries(): LiveData<PagedList<TVSeriesFavoriteEntity>>
     fun isFavoriteTVSeriesExist(id: Int): Boolean
-    suspend fun setFavoriteTVSeries(favoriteTVSeriesFavorite: TVSeriesFavorite)
-    suspend fun deleteFavoriteTVSeries(favoriteTVSeriesFavorite: TVSeriesFavorite)
+    suspend fun setFavoriteTVSeries(favoriteTVSeriesFavoriteEntity: TVSeriesFavoriteEntity)
+    suspend fun deleteFavoriteTVSeries(favoriteTVSeriesFavoriteEntity: TVSeriesFavoriteEntity)
 }

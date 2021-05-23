@@ -8,7 +8,9 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import com.user.fadhlanhadaina.moviecataloguesubmission.R
 import com.user.fadhlanhadaina.moviecataloguesubmission.databinding.ActivityHomeBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
     private lateinit var bind: ActivityHomeBinding
 

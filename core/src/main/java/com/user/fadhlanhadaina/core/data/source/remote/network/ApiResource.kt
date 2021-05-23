@@ -1,4 +1,4 @@
-package com.user.fadhlanhadaina.core.data.source.remote
+package com.user.fadhlanhadaina.core.data.source.remote.network
 
 import com.user.fadhlanhadaina.core.BuildConfig
 import com.user.fadhlanhadaina.core.data.source.remote.response.DetailMovieResponse

@@ -5,25 +5,26 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
 import androidx.lifecycle.observe
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.user.fadhlanhadaina.moviecataloguesubmission.R
-import com.user.fadhlanhadaina.core.domain.model.MovieFavorite
+import com.user.fadhlanhadaina.core.domain.model.entity.MovieFavoriteEntity
 import com.user.fadhlanhadaina.moviecataloguesubmission.databinding.ActivityDetailBinding
 import com.user.fadhlanhadaina.core.util.ExtFun.load
 import com.user.fadhlanhadaina.core.util.ExtFun.show
-import com.user.fadhlanhadaina.moviecataloguesubmission.viewmodel.ViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailMovieActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_ID = "movie_id"
     }
 
     private lateinit var binding: ActivityDetailBinding
-    private lateinit var detailMovieViewModel: DetailMovieViewModel
+    private val detailMovieViewModel: DetailMovieViewModel by viewModels()
     private var favorited: Boolean = false
-    private var movieFavorite: MovieFavorite? = null
+    private var movieFavoriteEntity: MovieFavoriteEntity? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +32,6 @@ class DetailMovieActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initActivity()
-        initViewModel()
         showDetails()
     }
 
@@ -39,11 +39,6 @@ class DetailMovieActivity : AppCompatActivity() {
         supportActionBar?.title = "Movie Detail"
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
-    private fun initViewModel() {
-        val factory = ViewModelFactory.newInstance(application)
-        detailMovieViewModel = ViewModelProvider(this, factory).get(DetailMovieViewModel::class.java)
     }
 
     @SuppressLint("SetTextI18n")
@@ -66,7 +61,7 @@ class DetailMovieActivity : AppCompatActivity() {
             binding.tvOverviewDetail.text = it.overview
             binding.tvGenreDetail.text = "Genre: ${it.genres}"
 
-            movieFavorite = MovieFavorite(it.id, it.posterUrl, it.title, it.releaseDate, it.genres)
+            movieFavoriteEntity = MovieFavoriteEntity(it.id, it.posterUrl, it.title, it.releaseDate, it.genres)
             binding.btnFavorite.isEnabled = true
             binding.btnFavorite.setOnClickListener {
                 favorited = when(favorited) {
@@ -91,13 +86,13 @@ class DetailMovieActivity : AppCompatActivity() {
 
     @SuppressLint("ShowToast")
     private fun setFavorite(boolean: Boolean) {
-        if(movieFavorite != null) {
+        if(movieFavoriteEntity != null) {
             if (boolean) {
-                detailMovieViewModel.insertFavoriteMovie(movieFavorite!!)
+                detailMovieViewModel.insertFavoriteMovie(movieFavoriteEntity!!)
                 Toast.makeText(this, "Added to favorite!", Toast.LENGTH_SHORT).show()
             }
             else {
-                detailMovieViewModel.deleteFavoriteMovie(movieFavorite!!)
+                detailMovieViewModel.deleteFavoriteMovie(movieFavoriteEntity!!)
                 Toast.makeText(this, "Removed to favorite!", Toast.LENGTH_SHORT).show()
             }
 

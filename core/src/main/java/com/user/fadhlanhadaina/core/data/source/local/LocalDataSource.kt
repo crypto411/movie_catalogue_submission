@@ -1,27 +1,23 @@
 package com.user.fadhlanhadaina.core.data.source.local
 
 import androidx.paging.DataSource
-import com.user.fadhlanhadaina.core.domain.model.MovieFavorite
-import com.user.fadhlanhadaina.core.domain.model.TVSeriesFavorite
+import com.user.fadhlanhadaina.core.domain.model.entity.MovieFavoriteEntity
+import com.user.fadhlanhadaina.core.domain.model.entity.TVSeriesFavoriteEntity
 import com.user.fadhlanhadaina.core.data.source.local.database.FavoriteDao
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class LocalDataSource constructor(private val favoriteDao: FavoriteDao) {
-    companion object {
-        private var INSTANCE: LocalDataSource? = null
-
-        fun newInstance(favoriteDao: FavoriteDao): LocalDataSource =
-            INSTANCE ?: LocalDataSource(favoriteDao)
-    }
-
+@Singleton
+class LocalDataSource @Inject constructor(private val favoriteDao: FavoriteDao) {
     // Favorite Movie
-    fun insertFavoriteMovie(movieFavorite: MovieFavorite) = favoriteDao.insert(movieFavorite)
-    fun deleteFavoriteMovie(movieFavorite: MovieFavorite) = favoriteDao.delete(movieFavorite)
-    fun getAllFavoriteMovie(): DataSource.Factory<Int, MovieFavorite> = favoriteDao.getAllMovies()
-    fun getFavoriteMovieById(id: Int): MovieFavorite? = favoriteDao.getMovieById(id)
+    fun insertFavoriteMovie(movieFavoriteEntity: MovieFavoriteEntity) = favoriteDao.insert(movieFavoriteEntity)
+    fun deleteFavoriteMovie(movieFavoriteEntity: MovieFavoriteEntity) = favoriteDao.delete(movieFavoriteEntity)
+    fun getAllFavoriteMovie(): DataSource.Factory<Int, MovieFavoriteEntity> = favoriteDao.getAllMovies()
+    fun getFavoriteMovieById(id: Int): MovieFavoriteEntity? = favoriteDao.getMovieById(id)
 
     // Favorite TVSeries
-    fun insertFavoriteTVSeries(tvSeriesFavorite: TVSeriesFavorite) = favoriteDao.insert(tvSeriesFavorite)
-    fun deleteFavoriteTVSeries(tvSeriesFavorite: TVSeriesFavorite) = favoriteDao.delete(tvSeriesFavorite)
-    fun getAllFavoriteTVSeries(): DataSource.Factory<Int, TVSeriesFavorite> = favoriteDao.getAllTVSeries()
-    fun getFavoriteTVSeriesById(id: Int): TVSeriesFavorite? = favoriteDao.getTVSeriesById(id)
+    fun insertFavoriteTVSeries(tvSeriesFavoriteEntity: TVSeriesFavoriteEntity) = favoriteDao.insert(tvSeriesFavoriteEntity)
+    fun deleteFavoriteTVSeries(tvSeriesFavoriteEntity: TVSeriesFavoriteEntity) = favoriteDao.delete(tvSeriesFavoriteEntity)
+    fun getAllFavoriteTVSeries(): DataSource.Factory<Int, TVSeriesFavoriteEntity> = favoriteDao.getAllTVSeries()
+    fun getFavoriteTVSeriesById(id: Int): TVSeriesFavoriteEntity? = favoriteDao.getTVSeriesById(id)
 }

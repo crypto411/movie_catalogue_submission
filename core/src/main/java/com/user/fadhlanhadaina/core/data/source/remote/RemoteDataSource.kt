@@ -1,6 +1,7 @@
 package com.user.fadhlanhadaina.core.data.source.remote
 
 import android.util.Log
+import com.user.fadhlanhadaina.core.data.source.remote.network.ApiResource
 import com.user.fadhlanhadaina.core.data.source.remote.response.DetailMovieResponse
 import com.user.fadhlanhadaina.core.data.source.remote.response.DetailTVSeriesResponse
 import com.user.fadhlanhadaina.core.data.source.remote.response.MovieResponse
@@ -8,13 +9,11 @@ import com.user.fadhlanhadaina.core.data.source.remote.response.TVSeriesResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class RemoteDataSource(private val clientApi: ApiResource) {
-    companion object {
-        fun newInstance(clientApi: ApiResource): RemoteDataSource {
-            return RemoteDataSource(clientApi)
-        }
-    }
+@Singleton
+class RemoteDataSource @Inject constructor(private val clientApi: ApiResource) {
 
     fun getMovies(callback: PopularMovieCallback) {
 

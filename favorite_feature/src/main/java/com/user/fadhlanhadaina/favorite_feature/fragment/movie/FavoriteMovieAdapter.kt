@@ -7,40 +7,40 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.user.fadhlanhadaina.core.domain.model.MovieFavorite
+import com.user.fadhlanhadaina.core.domain.model.entity.MovieFavoriteEntity
 import com.user.fadhlanhadaina.moviecataloguesubmission.databinding.RowDataBinding
 import com.user.fadhlanhadaina.moviecataloguesubmission.ui.activities.detail.movie.DetailMovieActivity
 import com.user.fadhlanhadaina.core.util.ExtFun.load
 
-class FavoriteMovieAdapter: PagedListAdapter<MovieFavorite, FavoriteMovieAdapter.ViewHolder>(DIFFERENT_CALLBACK) {
+class FavoriteMovieAdapter: PagedListAdapter<MovieFavoriteEntity, FavoriteMovieAdapter.ViewHolder>(DIFFERENT_CALLBACK) {
 
     companion object {
-        private val DIFFERENT_CALLBACK: DiffUtil.ItemCallback<MovieFavorite> = object : DiffUtil.ItemCallback<MovieFavorite>() {
-            override fun areItemsTheSame(oldMovieFavorite: MovieFavorite, newMovieFavorite: MovieFavorite): Boolean {
-                return oldMovieFavorite.title == newMovieFavorite.title && oldMovieFavorite.date == newMovieFavorite.date
+        private val DIFFERENT_CALLBACK: DiffUtil.ItemCallback<MovieFavoriteEntity> = object : DiffUtil.ItemCallback<MovieFavoriteEntity>() {
+            override fun areItemsTheSame(oldMovieFavoriteEntity: MovieFavoriteEntity, newMovieFavoriteEntity: MovieFavoriteEntity): Boolean {
+                return oldMovieFavoriteEntity.title == newMovieFavoriteEntity.title && oldMovieFavoriteEntity.date == newMovieFavoriteEntity.date
             }
             @SuppressLint("DiffUtilEquals")
-            override fun areContentsTheSame(oldMovieFavorite: MovieFavorite, newMovieFavorite: MovieFavorite): Boolean {
-                return oldMovieFavorite == newMovieFavorite
+            override fun areContentsTheSame(oldMovieFavoriteEntity: MovieFavoriteEntity, newMovieFavoriteEntity: MovieFavoriteEntity): Boolean {
+                return oldMovieFavoriteEntity == newMovieFavoriteEntity
             }
         }
     }
 
     inner class ViewHolder(private val binding: RowDataBinding) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
-        fun bind(movieFavorite: MovieFavorite) {
-            binding.ivList.load(movieFavorite.posterUrl)
-            binding.tvTitleList.text = movieFavorite.title
+        fun bind(movieFavoriteEntity: MovieFavoriteEntity) {
+            binding.ivList.load(movieFavoriteEntity.posterUrl)
+            binding.tvTitleList.text = movieFavoriteEntity.title
 
-            val splittedDate = movieFavorite.date.split("/")
+            val splittedDate = movieFavoriteEntity.date.split("/")
             val year = when(splittedDate.size) {
                 2 -> splittedDate[2]
-                else -> movieFavorite.date.split("-")[0]
+                else -> movieFavoriteEntity.date.split("-")[0]
             }
             binding.tvYearList.text = "(${year})"
             binding.root.setOnClickListener {
                 val intent = Intent(binding.root.context, DetailMovieActivity::class.java)
-                intent.putExtra(DetailMovieActivity.EXTRA_ID, movieFavorite.id)
+                intent.putExtra(DetailMovieActivity.EXTRA_ID, movieFavoriteEntity.id)
                 binding.root.context.startActivity(intent)
             }
         }

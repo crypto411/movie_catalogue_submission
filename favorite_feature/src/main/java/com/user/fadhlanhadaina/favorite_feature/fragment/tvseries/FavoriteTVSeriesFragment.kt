@@ -1,25 +1,26 @@
 package com.user.fadhlanhadaina.favorite_feature.fragment.tvseries
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.paging.PagedList
-import com.user.fadhlanhadaina.core.domain.model.MovieFavorite
+import com.user.fadhlanhadaina.core.domain.model.entity.MovieFavoriteEntity
 import com.user.fadhlanhadaina.favorite_feature.databinding.FavoriteTVSeriesFragmentBinding
-import com.user.fadhlanhadaina.favorite_feature.viewmodel.ViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FavoriteTVSeriesFragment : Fragment() {
 
     companion object {
         fun newInstance() = FavoriteTVSeriesFragment()
     }
 
-    private lateinit var viewModel: FavoriteTVSeriesViewModel
+    private val viewModel: FavoriteTVSeriesViewModel by viewModels()
     private lateinit var binding: FavoriteTVSeriesFragmentBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -30,13 +31,7 @@ class FavoriteTVSeriesFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        initViewModel()
         showList()
-    }
-
-    private fun initViewModel() {
-        val factory = ViewModelFactory.newInstance(requireActivity().application)
-        viewModel = ViewModelProvider(this, factory)[FavoriteTVSeriesViewModel::class.java]
     }
 
     private fun showList() {
@@ -47,7 +42,7 @@ class FavoriteTVSeriesFragment : Fragment() {
             rvFavTVSeries.adapter = favoriteTVSeriesAdapter
         }
         viewModel.getAllFavoriteTVSeries().observe(viewLifecycleOwner) {
-            if(it != emptyList<PagedList<MovieFavorite>>())
+            if(it != emptyList<PagedList<MovieFavoriteEntity>>())
                 favoriteTVSeriesAdapter.submitList(it)
             else
                 Toast.makeText(context, "Favorite TVSeries not found!", Toast.LENGTH_LONG).show()

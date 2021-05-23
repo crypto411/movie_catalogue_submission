@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.os.Handler
 import com.user.fadhlanhadaina.moviecataloguesubmission.R
 import com.user.fadhlanhadaina.moviecataloguesubmission.ui.activities.home.HomeActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
     companion object {
         private const val DELAY_MILLIS = 1000L

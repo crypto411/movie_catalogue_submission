@@ -1,24 +1,25 @@
 package com.user.fadhlanhadaina.moviecataloguesubmission.ui.fragments.home.movie
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.user.fadhlanhadaina.moviecataloguesubmission.databinding.MovieFragmentBinding
 import com.user.fadhlanhadaina.core.util.ExtFun.show
-import com.user.fadhlanhadaina.moviecataloguesubmission.viewmodel.ViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MovieFragment : Fragment() {
 
     companion object {
         fun newInstance() = MovieFragment()
     }
 
-    private lateinit var viewModel: MovieViewModel
+    private val viewModel: MovieViewModel by viewModels()
     private lateinit var binding: MovieFragmentBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -28,13 +29,8 @@ class MovieFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        initViewModel()
-        showList()
-    }
 
-    private fun initViewModel() {
-        val factory = ViewModelFactory.newInstance(requireActivity().application)
-        viewModel = ViewModelProvider(this, factory)[MovieViewModel::class.java]
+        showList()
     }
 
     private fun showList() {

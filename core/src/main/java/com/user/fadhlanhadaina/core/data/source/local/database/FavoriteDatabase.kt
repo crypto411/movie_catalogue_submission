@@ -1,30 +1,11 @@
 package com.user.fadhlanhadaina.core.data.source.local.database
 
-import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.user.fadhlanhadaina.core.domain.model.MovieFavorite
-import com.user.fadhlanhadaina.core.domain.model.TVSeriesFavorite
+import com.user.fadhlanhadaina.core.domain.model.entity.MovieFavoriteEntity
+import com.user.fadhlanhadaina.core.domain.model.entity.TVSeriesFavoriteEntity
 
-@Database(entities = [MovieFavorite::class, TVSeriesFavorite::class], version = 1, exportSchema = false)
+@Database(entities = [MovieFavoriteEntity::class, TVSeriesFavoriteEntity::class], version = 1, exportSchema = false)
 abstract class FavoriteDatabase: RoomDatabase() {
     abstract fun favoriteDao(): FavoriteDao
-
-    companion object {
-        private var INSTANCE: FavoriteDatabase? = null
-
-        fun newInstance(context: Context): FavoriteDatabase =
-            INSTANCE ?: synchronized(this) {
-                Room.databaseBuilder(
-                    context.applicationContext,
-                    FavoriteDatabase::class.java,
-                    "favorite.db"
-                )
-                .allowMainThreadQueries()
-                .build().apply {
-                    INSTANCE = this
-                }
-            }
-    }
 }

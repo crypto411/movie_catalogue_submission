@@ -2,34 +2,34 @@ package com.user.fadhlanhadaina.core.data.source.local.database
 
 import androidx.paging.DataSource
 import androidx.room.*
-import com.user.fadhlanhadaina.core.domain.model.MovieFavorite
-import com.user.fadhlanhadaina.core.domain.model.TVSeriesFavorite
+import com.user.fadhlanhadaina.core.domain.model.entity.MovieFavoriteEntity
+import com.user.fadhlanhadaina.core.domain.model.entity.TVSeriesFavoriteEntity
 
 @Dao
 interface FavoriteDao {
 
-    @Query("SELECT * FROM moviefavorite")
-    fun getAllMovies(): DataSource.Factory<Int, MovieFavorite>
+    @Query("SELECT * FROM moviefavoriteentity")
+    fun getAllMovies(): DataSource.Factory<Int, MovieFavoriteEntity>
 
-    @Query("SELECT * FROM moviefavorite WHERE id = :id LIMIT 1")
-    fun getMovieById(id: Int): MovieFavorite?
+    @Query("SELECT * FROM moviefavoriteentity WHERE id = :id LIMIT 1")
+    fun getMovieById(id: Int): MovieFavoriteEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(movie: MovieFavorite)
+    fun insert(movieEntity: MovieFavoriteEntity)
 
     @Delete
-    fun delete(movie: MovieFavorite)
+    fun delete(movieEntity: MovieFavoriteEntity)
 
 /*================================================================================================*/
-    @Query("SELECT * FROM tvseriesfavorite")
-    fun getAllTVSeries(): DataSource.Factory<Int, TVSeriesFavorite>
+    @Query("SELECT * FROM tvseriesfavoriteentity")
+    fun getAllTVSeries(): DataSource.Factory<Int, TVSeriesFavoriteEntity>
 
-    @Query("SELECT * FROM tvseriesfavorite WHERE id = :id LIMIT 1")
-    fun getTVSeriesById(id: Int): TVSeriesFavorite?
+    @Query("SELECT * FROM tvseriesfavoriteentity WHERE id = :id LIMIT 1")
+    fun getTVSeriesById(id: Int): TVSeriesFavoriteEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(tvSeries: TVSeriesFavorite)
+    fun insert(tvSeriesEntity: TVSeriesFavoriteEntity)
 
     @Delete
-    fun delete(tvSeries: TVSeriesFavorite)
+    fun delete(tvSeriesEntity: TVSeriesFavoriteEntity)
 }

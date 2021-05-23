@@ -5,25 +5,26 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
 import androidx.lifecycle.observe
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.user.fadhlanhadaina.moviecataloguesubmission.R
-import com.user.fadhlanhadaina.core.domain.model.TVSeriesFavorite
+import com.user.fadhlanhadaina.core.domain.model.entity.TVSeriesFavoriteEntity
 import com.user.fadhlanhadaina.moviecataloguesubmission.databinding.ActivityDetailBinding
 import com.user.fadhlanhadaina.core.util.ExtFun.load
 import com.user.fadhlanhadaina.core.util.ExtFun.show
-import com.user.fadhlanhadaina.moviecataloguesubmission.viewmodel.ViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailTVSeriesActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_ID = "tv_series_id"
     }
 
     private lateinit var binding: ActivityDetailBinding
-    private lateinit var detailTVSeriesViewModel: DetailTVSeriesViewModel
+    private val detailTVSeriesViewModel: DetailTVSeriesViewModel by viewModels()
     private var favorited: Boolean = false
-    private var tvSeriesFavorite: TVSeriesFavorite? = null
+    private var tvSeriesFavoriteEntity: TVSeriesFavoriteEntity? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +32,6 @@ class DetailTVSeriesActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initActivity()
-        initViewModel()
         showDetails()
     }
 
@@ -39,11 +39,6 @@ class DetailTVSeriesActivity : AppCompatActivity() {
         supportActionBar?.title = "TV Series Detail"
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
-    private fun initViewModel() {
-        val factory = ViewModelFactory.newInstance(application)
-        detailTVSeriesViewModel = ViewModelProvider(this, factory).get(DetailTVSeriesViewModel::class.java)
     }
 
     @SuppressLint("SetTextI18n")
@@ -66,7 +61,7 @@ class DetailTVSeriesActivity : AppCompatActivity() {
             binding.tvOverviewDetail.text = it.overview
             binding.tvGenreDetail.text = "Genre: ${it.genres}"
 
-            tvSeriesFavorite = TVSeriesFavorite(it.id, it.posterUrl, it.title, it.releaseDate, it.genres)
+            tvSeriesFavoriteEntity = TVSeriesFavoriteEntity(it.id, it.posterUrl, it.title, it.releaseDate, it.genres)
             binding.btnFavorite.isEnabled = true
             binding.btnFavorite.setOnClickListener {
                 favorited = when(favorited) {
@@ -91,13 +86,13 @@ class DetailTVSeriesActivity : AppCompatActivity() {
 
     @SuppressLint("ShowToast")
     private fun setFavorite(boolean: Boolean) {
-        if(tvSeriesFavorite != null) {
+        if(tvSeriesFavoriteEntity != null) {
             if (boolean) {
-                detailTVSeriesViewModel.insertFavoriteTVSeries(tvSeriesFavorite!!)
+                detailTVSeriesViewModel.insertFavoriteTVSeries(tvSeriesFavoriteEntity!!)
                 Toast.makeText(this, "Added to favorite!", Toast.LENGTH_SHORT).show()
             }
             else {
-                detailTVSeriesViewModel.deleteFavoriteTVSeries(tvSeriesFavorite!!)
+                detailTVSeriesViewModel.deleteFavoriteTVSeries(tvSeriesFavoriteEntity!!)
                 Toast.makeText(this, "Removed to favorite!", Toast.LENGTH_SHORT).show()
             }
 

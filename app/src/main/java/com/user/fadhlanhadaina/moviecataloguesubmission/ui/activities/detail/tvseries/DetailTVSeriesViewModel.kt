@@ -4,12 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.user.fadhlanhadaina.core.domain.model.TVSeries
-import com.user.fadhlanhadaina.core.domain.model.TVSeriesFavorite
-import com.user.fadhlanhadaina.core.domain.repository.IMovieCatalogueRepository
+import com.user.fadhlanhadaina.core.domain.model.entity.TVSeriesFavoriteEntity
 import com.user.fadhlanhadaina.core.domain.usecase.MovieCatalogueUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DetailTVSeriesViewModel(private val movieCatalogueUseCase: MovieCatalogueUseCase): ViewModel() {
+@HiltViewModel
+class DetailTVSeriesViewModel @Inject constructor(private val movieCatalogueUseCase: MovieCatalogueUseCase): ViewModel() {
     private var tvSeries: LiveData<TVSeries>? = null
 
     fun getTVSeries(id: Int): LiveData<TVSeries>? {
@@ -18,12 +20,12 @@ class DetailTVSeriesViewModel(private val movieCatalogueUseCase: MovieCatalogueU
         return tvSeries
     }
 
-    fun insertFavoriteTVSeries(movieFavorite: TVSeriesFavorite) = viewModelScope.launch {
-        movieCatalogueUseCase.setFavoriteTVSeries(movieFavorite)
+    fun insertFavoriteTVSeries(movieFavoriteEntity: TVSeriesFavoriteEntity) = viewModelScope.launch {
+        movieCatalogueUseCase.setFavoriteTVSeries(movieFavoriteEntity)
     }
 
-    fun deleteFavoriteTVSeries(movieFavorite: TVSeriesFavorite) = viewModelScope.launch {
-        movieCatalogueUseCase.deleteFavoriteTVSeries(movieFavorite)
+    fun deleteFavoriteTVSeries(movieFavoriteEntity: TVSeriesFavoriteEntity) = viewModelScope.launch {
+        movieCatalogueUseCase.deleteFavoriteTVSeries(movieFavoriteEntity)
     }
 
     fun isFavoriteTVSeries(id: Int) = movieCatalogueUseCase.isFavoriteTVSeriesExist(id)
