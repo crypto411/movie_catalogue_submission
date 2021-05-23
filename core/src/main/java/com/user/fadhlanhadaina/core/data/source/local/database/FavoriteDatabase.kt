@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import com.user.fadhlanhadaina.core.domain.model.entity.MovieFavoriteEntity
 import com.user.fadhlanhadaina.core.domain.model.entity.TVSeriesFavoriteEntity
 
-@Database(entities = [MovieFavoriteEntity::class, TVSeriesFavoriteEntity::class], version = 1, exportSchema = false)
+@Database(entities = [MovieFavoriteEntity::class, TVSeriesFavoriteEntity::class], version = 2, exportSchema = false)
 abstract class FavoriteDatabase: RoomDatabase() {
     abstract fun favoriteDao(): FavoriteDao
 }

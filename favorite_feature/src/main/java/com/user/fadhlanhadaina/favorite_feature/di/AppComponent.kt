@@ -1,15 +1,17 @@
 package com.user.fadhlanhadaina.favorite_feature.di
 
 import android.content.Context
-import androidx.fragment.app.Fragment
-import com.user.fadhlanhadaina.core.di.AppDependencies
+import com.user.fadhlanhadaina.favorite_feature.fragment.movie.FavoriteMovieFragment
+import com.user.fadhlanhadaina.favorite_feature.fragment.tvseries.FavoriteTVSeriesFragment
+import com.user.fadhlanhadaina.moviecataloguesubmission.ui.di.AppDependencies
 import dagger.BindsInstance
 import dagger.Component
 
 @Component(dependencies = [AppDependencies::class])
 interface AppComponent {
 
-    fun inject(fragment: Fragment)
+    fun inject(fragment: FavoriteMovieFragment)
+    fun inject(fragment: FavoriteTVSeriesFragment)
 
     @Component.Builder
     interface Builder {

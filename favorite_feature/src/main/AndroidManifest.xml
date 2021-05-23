@@ -4,7 +4,6 @@
     package="com.user.fadhlanhadaina.favorite_feature">
 
     <application>
-
         <activity android:name=".activity.FavoriteActivity" />
     </application>
 

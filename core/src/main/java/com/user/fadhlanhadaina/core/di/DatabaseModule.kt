@@ -7,12 +7,12 @@ import com.user.fadhlanhadaina.core.data.source.local.database.FavoriteDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ApplicationComponent::class)
 class DatabaseModule {
     @Singleton
     @Provides
@@ -22,6 +22,7 @@ class DatabaseModule {
             FavoriteDatabase::class.java,
             "favorite.db"
         )
+        .allowMainThreadQueries()
         .fallbackToDestructiveMigration()
         .build()
 

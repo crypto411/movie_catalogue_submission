@@ -1,5 +1,6 @@
 package com.user.fadhlanhadaina.favorite_feature.fragment.movie
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,18 +13,22 @@ import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.user.fadhlanhadaina.core.domain.model.entity.MovieFavoriteEntity
 import com.user.fadhlanhadaina.favorite_feature.databinding.FavoriteMovieFragmentBinding
-import com.user.fadhlanhadaina.core.di.AppDependencies
-import dagger.hilt.android.AndroidEntryPoint
+import com.user.fadhlanhadaina.favorite_feature.di.DaggerAppComponent
+import com.user.fadhlanhadaina.favorite_feature.viewmodel.ViewModelFactory
+import com.user.fadhlanhadaina.moviecataloguesubmission.ui.di.AppDependencies
 import dagger.hilt.android.EntryPointAccessors
+import javax.inject.Inject
 
-@AndroidEntryPoint
 class FavoriteMovieFragment : Fragment() {
 
     companion object {
         fun newInstance() = FavoriteMovieFragment()
     }
 
-    private val viewModel: FavoriteMovieViewModel by viewModels<FavoriteMovieViewModel>()
+    @Inject
+    lateinit var factory: ViewModelFactory
+
+    private val viewModel: FavoriteMovieViewModel by viewModels { factory }
     private lateinit var binding: FavoriteMovieFragmentBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -32,18 +37,21 @@ class FavoriteMovieFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
         DaggerAppComponent.builder()
-            .context(this)
+            .context(context)
             .appDependencies(
                 EntryPointAccessors.fromApplication(
-                    context,
+                    context.applicationContext,
                     AppDependencies::class.java
                 )
             )
             .build()
             .inject(this)
-        super.onActivityCreated(savedInstanceState)
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         showList()
     }

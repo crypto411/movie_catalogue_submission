@@ -16,7 +16,7 @@ class MovieCatalogueInteractor @Inject constructor(private val movieCatalogueRep
     override fun getTVSeries(): LiveData<ArrayList<TVSeries>> = movieCatalogueRepository.getTVSeries()
     override fun getTVSeriesDetail(id: Int): LiveData<TVSeries> = movieCatalogueRepository.getTVSeriesDetail(id)
 
-    override fun getFavoriteMovies(): LiveData<PagedList<MovieFavoriteEntity>> = getFavoriteMovies()
+    override fun getFavoriteMovies(): LiveData<PagedList<MovieFavoriteEntity>> = movieCatalogueRepository.getFavoriteMovies()
     override fun isFavoriteMovieExist(id: Int): Boolean = movieCatalogueRepository.isFavoriteMovieExist(id)
     override suspend fun setFavoriteMovie(favoriteMovieEntity: MovieFavoriteEntity) = movieCatalogueRepository.setFavoriteMovie(favoriteMovieEntity)
     override suspend fun deleteFavoriteMovie(favoriteMovieEntity: MovieFavoriteEntity) = movieCatalogueRepository.deleteFavoriteMovie(favoriteMovieEntity)

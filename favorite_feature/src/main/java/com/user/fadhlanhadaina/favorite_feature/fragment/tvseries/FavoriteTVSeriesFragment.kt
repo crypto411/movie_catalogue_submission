@@ -1,5 +1,6 @@
 package com.user.fadhlanhadaina.favorite_feature.fragment.tvseries
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,16 +12,21 @@ import androidx.lifecycle.observe
 import androidx.paging.PagedList
 import com.user.fadhlanhadaina.core.domain.model.entity.MovieFavoriteEntity
 import com.user.fadhlanhadaina.favorite_feature.databinding.FavoriteTVSeriesFragmentBinding
-import dagger.hilt.android.AndroidEntryPoint
+import com.user.fadhlanhadaina.favorite_feature.di.DaggerAppComponent
+import com.user.fadhlanhadaina.favorite_feature.viewmodel.ViewModelFactory
+import com.user.fadhlanhadaina.moviecataloguesubmission.ui.di.AppDependencies
+import dagger.hilt.android.EntryPointAccessors
+import javax.inject.Inject
 
-@AndroidEntryPoint
 class FavoriteTVSeriesFragment : Fragment() {
 
     companion object {
         fun newInstance() = FavoriteTVSeriesFragment()
     }
 
-    private val viewModel: FavoriteTVSeriesViewModel by viewModels()
+    @Inject
+    lateinit var factory: ViewModelFactory
+    private val viewModel: FavoriteTVSeriesViewModel by viewModels { factory }
     private lateinit var binding: FavoriteTVSeriesFragmentBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -28,12 +34,26 @@ class FavoriteTVSeriesFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        DaggerAppComponent.builder()
+            .context(context)
+            .appDependencies(
+                EntryPointAccessors.fromApplication(
+                    context.applicationContext,
+                    AppDependencies::class.java
+                )
+            )
+            .build()
+            .inject(this)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         showList()
     }
-
     private fun showList() {
         val favoriteTVSeriesAdapter = FavoriteTVSeriesAdapter()
         with(binding) {

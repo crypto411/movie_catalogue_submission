@@ -1,14 +1,12 @@
 package com.user.fadhlanhadaina.moviecataloguesubmission.ui.fragments.home.movie
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.user.fadhlanhadaina.core.domain.model.Movie
 import com.user.fadhlanhadaina.core.domain.usecase.MovieCatalogueUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-class MovieViewModel @Inject constructor(private val movieCatalogueUseCase: MovieCatalogueUseCase) : ViewModel() {
+class MovieViewModel @ViewModelInject constructor(private val movieCatalogueUseCase: MovieCatalogueUseCase) : ViewModel() {
     private var movieLists: LiveData<ArrayList<Movie>>? = null
 
     fun getMovies(): LiveData<ArrayList<Movie>>? {
