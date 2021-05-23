@@ -9,7 +9,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.observe
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.user.fadhlanhadaina.moviecataloguesubmission.R
-import com.user.fadhlanhadaina.core.domain.model.entity.TVSeriesFavoriteEntity
+import com.user.fadhlanhadaina.core.data.source.local.entity.TVSeriesFavoriteEntity
 import com.user.fadhlanhadaina.moviecataloguesubmission.databinding.ActivityDetailBinding
 import com.user.fadhlanhadaina.core.util.ExtFun.load
 import com.user.fadhlanhadaina.core.util.ExtFun.show

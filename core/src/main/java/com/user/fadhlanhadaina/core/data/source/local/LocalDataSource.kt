@@ -1,7 +1,7 @@
 package com.user.fadhlanhadaina.core.data.source.local
 
-import com.user.fadhlanhadaina.core.domain.model.entity.MovieFavoriteEntity
-import com.user.fadhlanhadaina.core.domain.model.entity.TVSeriesFavoriteEntity
+import com.user.fadhlanhadaina.core.data.source.local.entity.MovieFavoriteEntity
+import com.user.fadhlanhadaina.core.data.source.local.entity.TVSeriesFavoriteEntity
 import com.user.fadhlanhadaina.core.data.source.local.database.FavoriteDao
 import javax.inject.Inject
 import javax.inject.Singleton

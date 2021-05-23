@@ -1,9 +1,9 @@
 package com.user.fadhlanhadaina.core.domain.usecase
 
 import com.user.fadhlanhadaina.core.domain.model.Movie
-import com.user.fadhlanhadaina.core.domain.model.entity.MovieFavoriteEntity
+import com.user.fadhlanhadaina.core.data.source.local.entity.MovieFavoriteEntity
 import com.user.fadhlanhadaina.core.domain.model.TVSeries
-import com.user.fadhlanhadaina.core.domain.model.entity.TVSeriesFavoriteEntity
+import com.user.fadhlanhadaina.core.data.source.local.entity.TVSeriesFavoriteEntity
 import com.user.fadhlanhadaina.core.domain.repository.IMovieCatalogueRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

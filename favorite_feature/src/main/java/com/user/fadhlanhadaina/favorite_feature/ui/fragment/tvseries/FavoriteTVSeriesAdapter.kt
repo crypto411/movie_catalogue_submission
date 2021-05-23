@@ -5,7 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.user.fadhlanhadaina.core.domain.model.entity.TVSeriesFavoriteEntity
+import com.user.fadhlanhadaina.core.data.source.local.entity.TVSeriesFavoriteEntity
 import com.user.fadhlanhadaina.moviecataloguesubmission.databinding.RowDataBinding
 import com.user.fadhlanhadaina.moviecataloguesubmission.ui.activities.detail.tvseries.DetailTVSeriesActivity
 import com.user.fadhlanhadaina.core.util.ExtFun.load

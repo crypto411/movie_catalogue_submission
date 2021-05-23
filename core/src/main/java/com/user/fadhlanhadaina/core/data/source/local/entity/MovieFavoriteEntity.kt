@@ -1,11 +1,11 @@
-package com.user.fadhlanhadaina.core.domain.model.entity
+package com.user.fadhlanhadaina.core.data.source.local.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class TVSeriesFavoriteEntity (
+data class MovieFavoriteEntity (
     @PrimaryKey
     var id: Int,
 
@@ -19,5 +19,5 @@ data class TVSeriesFavoriteEntity (
     var date: String,
 
     @ColumnInfo(name = "genres")
-    var stringGenres: String
+    var genres: String
 )

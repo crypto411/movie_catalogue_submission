@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.user.fadhlanhadaina.core.domain.model.entity.MovieFavoriteEntity
+import com.user.fadhlanhadaina.core.data.source.local.entity.MovieFavoriteEntity
 import com.user.fadhlanhadaina.favorite_feature.databinding.FavoriteMovieFragmentBinding
 import com.user.fadhlanhadaina.favorite_feature.ui.di.DaggerAppComponent
 import com.user.fadhlanhadaina.favorite_feature.ui.viewmodel.ViewModelFactory

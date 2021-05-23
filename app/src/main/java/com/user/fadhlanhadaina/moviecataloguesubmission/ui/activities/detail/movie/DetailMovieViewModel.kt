@@ -2,7 +2,7 @@ package com.user.fadhlanhadaina.moviecataloguesubmission.ui.activities.detail.mo
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.user.fadhlanhadaina.core.domain.model.entity.MovieFavoriteEntity
+import com.user.fadhlanhadaina.core.data.source.local.entity.MovieFavoriteEntity
 import com.user.fadhlanhadaina.core.domain.usecase.MovieCatalogueUseCase
 import kotlinx.coroutines.launch
 

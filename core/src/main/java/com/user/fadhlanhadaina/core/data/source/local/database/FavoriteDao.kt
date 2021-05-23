@@ -1,8 +1,8 @@
 package com.user.fadhlanhadaina.core.data.source.local.database
 
 import androidx.room.*
-import com.user.fadhlanhadaina.core.domain.model.entity.MovieFavoriteEntity
-import com.user.fadhlanhadaina.core.domain.model.entity.TVSeriesFavoriteEntity
+import com.user.fadhlanhadaina.core.data.source.local.entity.MovieFavoriteEntity
+import com.user.fadhlanhadaina.core.data.source.local.entity.TVSeriesFavoriteEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

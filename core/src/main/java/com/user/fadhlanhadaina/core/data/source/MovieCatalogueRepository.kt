@@ -2,9 +2,9 @@ package com.user.fadhlanhadaina.core.data.source
 
 import com.user.fadhlanhadaina.core.data.source.remote.RemoteDataSource
 import com.user.fadhlanhadaina.core.domain.model.Movie
-import com.user.fadhlanhadaina.core.domain.model.entity.MovieFavoriteEntity
+import com.user.fadhlanhadaina.core.data.source.local.entity.MovieFavoriteEntity
 import com.user.fadhlanhadaina.core.domain.model.TVSeries
-import com.user.fadhlanhadaina.core.domain.model.entity.TVSeriesFavoriteEntity
+import com.user.fadhlanhadaina.core.data.source.local.entity.TVSeriesFavoriteEntity
 import com.user.fadhlanhadaina.core.data.source.local.LocalDataSource
 import com.user.fadhlanhadaina.core.domain.repository.IMovieCatalogueRepository
 import com.user.fadhlanhadaina.core.util.Mapper.mapToMovie
