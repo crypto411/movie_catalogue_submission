@@ -3,6 +3,7 @@ package com.user.fadhlanhadaina.moviecataloguesubmission.ui.activities.home
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -45,7 +46,16 @@ class HomeActivity : AppCompatActivity() {
 
     // Dynamic Feature
     private fun moveToFavoriteActivity() {
-        val intent = Intent(this@HomeActivity, Class.forName("com.user.fadhlanhadaina.favorite_feature.activity.FavoriteActivity"))
-        startActivity(intent)
+        try {
+            val favoriteActivity = Class.forName("com.user.fadhlanhadaina.favorite_feature.ui.activity.FavoriteActivity")
+            val intent = Intent(
+                this@HomeActivity,
+                favoriteActivity
+            )
+            startActivity(intent)
+        }
+        catch (e: ClassNotFoundException) {
+            Log.e("Favorite Feature", e.localizedMessage.toString())
+        }
     }
 }
