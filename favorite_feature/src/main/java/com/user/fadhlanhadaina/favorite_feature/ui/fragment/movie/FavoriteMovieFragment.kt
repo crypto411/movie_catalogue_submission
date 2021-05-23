@@ -1,4 +1,4 @@
-package com.user.fadhlanhadaina.favorite_feature.fragment.movie
+package com.user.fadhlanhadaina.favorite_feature.ui.fragment.movie
 
 import android.content.Context
 import android.os.Bundle
@@ -12,8 +12,8 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.user.fadhlanhadaina.core.domain.model.entity.MovieFavoriteEntity
 import com.user.fadhlanhadaina.favorite_feature.databinding.FavoriteMovieFragmentBinding
-import com.user.fadhlanhadaina.favorite_feature.di.DaggerAppComponent
-import com.user.fadhlanhadaina.favorite_feature.viewmodel.ViewModelFactory
+import com.user.fadhlanhadaina.favorite_feature.ui.di.DaggerAppComponent
+import com.user.fadhlanhadaina.favorite_feature.ui.viewmodel.ViewModelFactory
 import com.user.fadhlanhadaina.moviecataloguesubmission.ui.di.AppDependencies
 import dagger.hilt.android.EntryPointAccessors
 import javax.inject.Inject

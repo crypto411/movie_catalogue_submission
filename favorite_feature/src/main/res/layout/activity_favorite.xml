@@ -7,7 +7,7 @@
     android:background="@color/blue_300"
     android:backgroundTint="#192032"
     android:orientation="vertical"
-    tools:context="com.user.fadhlanhadaina.favorite_feature.activity.FavoriteActivity">
+    tools:context=".ui.activity.FavoriteActivity">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tlFavorite"

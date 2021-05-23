@@ -1,4 +1,4 @@
-package com.user.fadhlanhadaina.favorite_feature.activity
+package com.user.fadhlanhadaina.favorite_feature.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

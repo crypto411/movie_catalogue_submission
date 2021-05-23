@@ -1,8 +1,8 @@
-package com.user.fadhlanhadaina.favorite_feature.di
+package com.user.fadhlanhadaina.favorite_feature.ui.di
 
 import android.content.Context
-import com.user.fadhlanhadaina.favorite_feature.fragment.movie.FavoriteMovieFragment
-import com.user.fadhlanhadaina.favorite_feature.fragment.tvseries.FavoriteTVSeriesFragment
+import com.user.fadhlanhadaina.favorite_feature.ui.fragment.movie.FavoriteMovieFragment
+import com.user.fadhlanhadaina.favorite_feature.ui.fragment.tvseries.FavoriteTVSeriesFragment
 import com.user.fadhlanhadaina.moviecataloguesubmission.ui.di.AppDependencies
 import dagger.BindsInstance
 import dagger.Component

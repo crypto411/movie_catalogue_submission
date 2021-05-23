@@ -1,4 +1,4 @@
-package com.user.fadhlanhadaina.favorite_feature.activity
+package com.user.fadhlanhadaina.favorite_feature.ui.activity
 
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.user.fadhlanhadaina.favorite_feature.R
-import com.user.fadhlanhadaina.favorite_feature.fragment.movie.FavoriteMovieFragment
-import com.user.fadhlanhadaina.favorite_feature.fragment.tvseries.FavoriteTVSeriesFragment
+import com.user.fadhlanhadaina.favorite_feature.ui.fragment.movie.FavoriteMovieFragment
+import com.user.fadhlanhadaina.favorite_feature.ui.fragment.tvseries.FavoriteTVSeriesFragment
 
 class FavoritePagerAdapter(private val activity: AppCompatActivity, fm: FragmentManager): FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT){
     companion object {

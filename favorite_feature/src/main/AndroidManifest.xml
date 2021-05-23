@@ -4,7 +4,7 @@
     package="com.user.fadhlanhadaina.favorite_feature">
 
     <application>
-        <activity android:name=".activity.FavoriteActivity" />
+        <activity android:name="com.user.fadhlanhadaina.favorite_feature.ui.activity.FavoriteActivity" />
     </application>
 
     <dist:module

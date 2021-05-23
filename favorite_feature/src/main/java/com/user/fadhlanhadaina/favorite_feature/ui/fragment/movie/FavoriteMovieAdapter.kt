@@ -1,4 +1,4 @@
-package com.user.fadhlanhadaina.favorite_feature.fragment.movie
+package com.user.fadhlanhadaina.favorite_feature.ui.fragment.movie
 
 import android.annotation.SuppressLint
 import android.content.Intent

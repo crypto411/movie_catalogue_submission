@@ -1,4 +1,4 @@
-package com.user.fadhlanhadaina.favorite_feature.fragment.tvseries
+package com.user.fadhlanhadaina.favorite_feature.ui.fragment.tvseries
 
 import android.content.Context
 import android.os.Bundle
@@ -11,8 +11,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import com.user.fadhlanhadaina.core.domain.model.entity.MovieFavoriteEntity
 import com.user.fadhlanhadaina.favorite_feature.databinding.FavoriteTVSeriesFragmentBinding
-import com.user.fadhlanhadaina.favorite_feature.di.DaggerAppComponent
-import com.user.fadhlanhadaina.favorite_feature.viewmodel.ViewModelFactory
+import com.user.fadhlanhadaina.favorite_feature.ui.di.DaggerAppComponent
+import com.user.fadhlanhadaina.favorite_feature.ui.viewmodel.ViewModelFactory
 import com.user.fadhlanhadaina.moviecataloguesubmission.ui.di.AppDependencies
 import dagger.hilt.android.EntryPointAccessors
 import javax.inject.Inject
