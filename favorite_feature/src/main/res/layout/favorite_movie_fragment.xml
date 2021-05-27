@@ -3,11 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.movie.FavoriteMovieFragment">
+    tools:context=".ui.fragment.movie.FavoriteMovieFragment"
+    android:gravity="center"
+    android:layout_weight="1">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvFavMovie"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/row_data"/>
+        tools:listitem="@layout/row_data"
+        tools:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/favoriteMovieInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/daftar_favorite_kosong"
+        android:textSize="24sp"
+        android:textColor="@color/blue_700"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+
 </FrameLayout>

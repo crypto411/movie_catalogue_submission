@@ -60,12 +60,17 @@ class FavoriteMovieFragment : Fragment() {
         with(binding) {
             rvFavMovie.layoutManager = LinearLayoutManager(context)
             rvFavMovie.adapter = favoriteMovieAdapter
-        }
-        viewModel.getAllFavoriteMovie().observe(viewLifecycleOwner) {
-            if(it != emptyList<MovieFavoriteEntity>())
-                favoriteMovieAdapter.setData(it)
-            else
-                Toast.makeText(context, "Favorite Movie not found!", Toast.LENGTH_LONG).show()
+            viewModel.getAllFavoriteMovie().observe(viewLifecycleOwner) {
+                if(it != emptyList<MovieFavoriteEntity>()) {
+                    rvFavMovie.visibility = View.VISIBLE
+                    favoriteMovieAdapter.setData(it)
+                    favoriteMovieInfo.visibility = View.GONE
+                }
+                else {
+                    rvFavMovie.visibility = View.GONE
+                    favoriteMovieInfo.visibility = View.VISIBLE
+                }
+            }
         }
     }
 

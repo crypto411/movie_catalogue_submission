@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.user.fadhlanhadaina.core.data.source.local.entity.MovieFavoriteEntity
 import com.user.fadhlanhadaina.favorite_feature.databinding.FavoriteTVSeriesFragmentBinding
 import com.user.fadhlanhadaina.favorite_feature.ui.di.DaggerAppComponent
@@ -56,15 +57,19 @@ class FavoriteTVSeriesFragment : Fragment() {
     private fun showList() {
         val favoriteTVSeriesAdapter = FavoriteTVSeriesAdapter()
         with(binding) {
-            rvFavTVSeries.layoutManager =
-                androidx.recyclerview.widget.LinearLayoutManager(context)
+            rvFavTVSeries.layoutManager = LinearLayoutManager(context)
             rvFavTVSeries.adapter = favoriteTVSeriesAdapter
-        }
-        viewModel.getAllFavoriteTVSeries().observe(viewLifecycleOwner) {
-            if(it != emptyList<MovieFavoriteEntity>())
-                favoriteTVSeriesAdapter.setData(it)
-            else
-                Toast.makeText(context, "Favorite TVSeries not found!", Toast.LENGTH_LONG).show()
+            viewModel.getAllFavoriteTVSeries().observe(viewLifecycleOwner) {
+                if(it != emptyList<MovieFavoriteEntity>()) {
+                    favoriteTVSeriesAdapter.setData(it)
+                    rvFavTVSeries.visibility = View.VISIBLE
+                    favoriteTVSeriesInfo.visibility = View.GONE
+                }
+                else {
+                    rvFavTVSeries.visibility = View.GONE
+                    favoriteTVSeriesInfo.visibility = View.VISIBLE
+                }
+            }
         }
     }
 
