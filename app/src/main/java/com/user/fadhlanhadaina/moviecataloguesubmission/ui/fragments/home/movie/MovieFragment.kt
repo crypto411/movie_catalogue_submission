@@ -19,11 +19,12 @@ class MovieFragment : Fragment() {
         fun newInstance() = MovieFragment()
     }
 
+    private val binding: MovieFragmentBinding by lazy {
+        MovieFragmentBinding.inflate(layoutInflater)
+    }
     private val viewModel: MovieViewModel by viewModels()
-    private lateinit var binding: MovieFragmentBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = MovieFragmentBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 

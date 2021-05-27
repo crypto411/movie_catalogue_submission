@@ -24,15 +24,14 @@ class FavoriteMovieFragment : Fragment() {
         fun newInstance() = FavoriteMovieFragment()
     }
 
+    private val binding: FavoriteMovieFragmentBinding by lazy {
+        FavoriteMovieFragmentBinding.inflate(layoutInflater)
+    }
     @Inject
     lateinit var factory: ViewModelFactory
-
     private val viewModel: FavoriteMovieViewModel by viewModels { factory }
-    private lateinit var binding: FavoriteMovieFragmentBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-
-        binding = FavoriteMovieFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 

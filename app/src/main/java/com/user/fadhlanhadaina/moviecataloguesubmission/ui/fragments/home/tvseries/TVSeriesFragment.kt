@@ -19,12 +19,13 @@ class TVSeriesFragment : Fragment() {
         fun newInstance() = TVSeriesFragment()
     }
 
+    private val binding: TVSeriesFragmentBinding by lazy {
+        TVSeriesFragmentBinding.inflate(layoutInflater)
+    }
     private val viewModel: TVSeriesViewModel by viewModels()
-    private lateinit var binding: TVSeriesFragmentBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        binding = TVSeriesFragmentBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 

@@ -19,14 +19,15 @@ class DetailMovieActivity : AppCompatActivity() {
         const val EXTRA_ID = "movie_id"
     }
 
-    private lateinit var binding: ActivityDetailBinding
+    private val binding: ActivityDetailBinding by lazy {
+        ActivityDetailBinding.inflate(layoutInflater)
+    }
     private val detailMovieViewModel: DetailMovieViewModel by viewModels()
     private var favorited: Boolean = false
     private var movieFavoriteEntity: MovieFavoriteEntity? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         initActivity()

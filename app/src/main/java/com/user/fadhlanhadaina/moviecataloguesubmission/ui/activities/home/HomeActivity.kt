@@ -13,11 +13,13 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
-    private lateinit var bind: ActivityHomeBinding
+
+    private val bind: ActivityHomeBinding by lazy {
+        ActivityHomeBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bind = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(bind.root)
 
         bind.vpHome.adapter = HomePagerAdapter(this, supportFragmentManager)

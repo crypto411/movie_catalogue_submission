@@ -19,14 +19,15 @@ class DetailTVSeriesActivity : AppCompatActivity() {
         const val EXTRA_ID = "tv_series_id"
     }
 
-    private lateinit var binding: ActivityDetailBinding
+    private val binding: ActivityDetailBinding by lazy {
+        ActivityDetailBinding.inflate(layoutInflater)
+    }
     private val detailTVSeriesViewModel: DetailTVSeriesViewModel by viewModels()
     private var favorited: Boolean = false
     private var tvSeriesFavoriteEntity: TVSeriesFavoriteEntity? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         initActivity()

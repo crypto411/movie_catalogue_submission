@@ -5,11 +5,12 @@ import android.os.Bundle
 import com.user.fadhlanhadaina.favorite_feature.databinding.ActivityFavoriteBinding
 
 class FavoriteActivity : AppCompatActivity() {
-    private lateinit var bind: ActivityFavoriteBinding
+    private val bind: ActivityFavoriteBinding by lazy {
+        ActivityFavoriteBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bind = ActivityFavoriteBinding.inflate(layoutInflater)
         setContentView(bind.root)
 
         title = "Favorites"
