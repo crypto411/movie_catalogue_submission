@@ -5,13 +5,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
-import com.user.fadhlanhadaina.core.data.source.local.entity.TVSeriesFavoriteEntity
+import com.user.fadhlanhadaina.core.domain.model.TVSeries
 import com.user.fadhlanhadaina.moviecataloguesubmission.databinding.ActivityDetailBinding
 import com.user.fadhlanhadaina.core.util.ExtFun.load
 import com.user.fadhlanhadaina.core.util.ExtFun.show
 import com.user.fadhlanhadaina.core.util.ExtFun.toggle
+import com.user.fadhlanhadaina.core.util.Mapper.mapToFavoriteEntity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DetailTVSeriesActivity : AppCompatActivity() {
@@ -24,7 +27,7 @@ class DetailTVSeriesActivity : AppCompatActivity() {
     }
     private val detailTVSeriesViewModel: DetailTVSeriesViewModel by viewModels()
     private var favorited: Boolean = false
-    private var tvSeriesFavoriteEntity: TVSeriesFavoriteEntity? = null
+    private lateinit var tvSeries: TVSeries
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,8 +47,8 @@ class DetailTVSeriesActivity : AppCompatActivity() {
     fun showDetails() {
         binding.progressBar.show(true)
         val id = intent.getIntExtra(EXTRA_ID, 0)
-        val tvSeries = detailTVSeriesViewModel.getTVSeries(id)
-        tvSeries.observe(this) { it ->
+        val tvSeriesLiveData = detailTVSeriesViewModel.getTVSeries(id)
+        tvSeriesLiveData.observe(this) { it ->
             binding.progressBar.show(false)
             binding.ivMovieDetail.load(it.posterUrl)
 
@@ -60,7 +63,6 @@ class DetailTVSeriesActivity : AppCompatActivity() {
             binding.tvOverviewDetail.text = it.overview
             binding.tvGenreDetail.text = "Genre: ${it.genres}"
 
-            tvSeriesFavoriteEntity = TVSeriesFavoriteEntity(it.id, it.posterUrl, it.title, it.releaseDate, it.genres)
             binding.btnFavorite.isEnabled = true
             binding.btnFavorite.setOnClickListener {
                 favorited = when(favorited) {
@@ -69,6 +71,8 @@ class DetailTVSeriesActivity : AppCompatActivity() {
                 }
                 setFavorite(favorited)
             }
+
+            tvSeries = it
         }
 
         detailTVSeriesViewModel.isFavoriteTVSeries(id).observe(this, {
@@ -80,19 +84,16 @@ class DetailTVSeriesActivity : AppCompatActivity() {
     }
 
     @SuppressLint("ShowToast")
-    private fun setFavorite(boolean: Boolean) {
-        if(tvSeriesFavoriteEntity != null) {
-            if (boolean) {
-                detailTVSeriesViewModel.insertFavoriteTVSeries(tvSeriesFavoriteEntity!!)
-                Toast.makeText(this, "Added to favorite!", Toast.LENGTH_SHORT).show()
-            }
-            else {
-                detailTVSeriesViewModel.deleteFavoriteTVSeries(tvSeriesFavoriteEntity!!)
-                Toast.makeText(this, "Removed to favorite!", Toast.LENGTH_SHORT).show()
-            }
-
-            binding.btnFavorite.toggle(boolean)
+    private fun setFavorite(boolean: Boolean) = lifecycleScope.launch {
+        if (boolean) {
+            detailTVSeriesViewModel.insertFavoriteTVSeries(tvSeries.mapToFavoriteEntity())
+            Toast.makeText(this@DetailTVSeriesActivity, "Added to favorite!", Toast.LENGTH_SHORT).show()
         }
+        else {
+            detailTVSeriesViewModel.deleteFavoriteTVSeries(tvSeries.mapToFavoriteEntity())
+            Toast.makeText(this@DetailTVSeriesActivity, "Removed from favorite!", Toast.LENGTH_SHORT).show()
+        }
+        binding.btnFavorite.toggle(boolean)
     }
 
     override fun onSupportNavigateUp(): Boolean {

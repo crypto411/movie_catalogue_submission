@@ -8,14 +8,8 @@ import kotlinx.coroutines.launch
 
 class DetailMovieViewModel @ViewModelInject constructor(private val movieCatalogueUseCase: MovieCatalogueUseCase): ViewModel() {
     fun getMovie(id: Int) = movieCatalogueUseCase.getMovieDetail(id).asLiveData()
-
-    fun insertFavoriteMovie(movieFavoriteEntity: MovieFavoriteEntity) = viewModelScope.launch {
-        movieCatalogueUseCase.setFavoriteMovie(movieFavoriteEntity)
-    }
-
-    fun deleteFavoriteMovie(movieFavoriteEntity: MovieFavoriteEntity) = viewModelScope.launch {
-        movieCatalogueUseCase.deleteFavoriteMovie(movieFavoriteEntity)
-    }
-
     fun isFavoriteMovie(id: Int) = movieCatalogueUseCase.isFavoriteMovieExist(id).asLiveData()
+
+    suspend fun insertFavoriteMovie(movieFavoriteEntity: MovieFavoriteEntity) = movieCatalogueUseCase.setFavoriteMovie(movieFavoriteEntity)
+    suspend fun deleteFavoriteMovie(movieFavoriteEntity: MovieFavoriteEntity) = movieCatalogueUseCase.deleteFavoriteMovie(movieFavoriteEntity)
 }

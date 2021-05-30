@@ -1,5 +1,7 @@
 package com.user.fadhlanhadaina.core.util
 
+import com.user.fadhlanhadaina.core.data.source.local.entity.MovieFavoriteEntity
+import com.user.fadhlanhadaina.core.data.source.local.entity.TVSeriesFavoriteEntity
 import com.user.fadhlanhadaina.core.data.source.remote.response.DetailMovieResponse
 import com.user.fadhlanhadaina.core.data.source.remote.response.DetailTVSeriesResponse
 import com.user.fadhlanhadaina.core.domain.model.Movie
@@ -71,4 +73,7 @@ object Mapper {
             when { !this.durationArray.isNullOrEmpty() -> this.durationArray[0] else -> 0 },
             this.overview)
     }
+    fun Movie.mapToFavoriteEntity(): MovieFavoriteEntity = MovieFavoriteEntity(this.id, this.posterUrl, this.title, this.releaseDate, this.genres)
+    fun TVSeries.mapToFavoriteEntity(): TVSeriesFavoriteEntity = TVSeriesFavoriteEntity(this.id, this.posterUrl, this.title, this.releaseDate, this.genres)
+
 }

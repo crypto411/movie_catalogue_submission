@@ -5,13 +5,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
-import com.user.fadhlanhadaina.core.data.source.local.entity.MovieFavoriteEntity
+import com.user.fadhlanhadaina.core.domain.model.Movie
 import com.user.fadhlanhadaina.moviecataloguesubmission.databinding.ActivityDetailBinding
 import com.user.fadhlanhadaina.core.util.ExtFun.load
 import com.user.fadhlanhadaina.core.util.ExtFun.show
 import com.user.fadhlanhadaina.core.util.ExtFun.toggle
+import com.user.fadhlanhadaina.core.util.Mapper.mapToFavoriteEntity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DetailMovieActivity : AppCompatActivity() {
@@ -24,7 +27,8 @@ class DetailMovieActivity : AppCompatActivity() {
     }
     private val detailMovieViewModel: DetailMovieViewModel by viewModels()
     private var favorited: Boolean = false
-    private var movieFavoriteEntity: MovieFavoriteEntity? = null
+    private lateinit var movie: Movie
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +64,6 @@ class DetailMovieActivity : AppCompatActivity() {
             binding.tvOverviewDetail.text = it.overview
             binding.tvGenreDetail.text = "Genre: ${it.genres}"
 
-            movieFavoriteEntity = MovieFavoriteEntity(it.id, it.posterUrl, it.title, it.releaseDate, it.genres)
             binding.btnFavorite.isEnabled = true
             binding.btnFavorite.setOnClickListener {
                 favorited = when(favorited) {
@@ -69,6 +72,8 @@ class DetailMovieActivity : AppCompatActivity() {
                 }
                 setFavorite(favorited)
             }
+
+            movie = it
         }
         detailMovieViewModel.isFavoriteMovie(id).observe(this, {
             if(it != null) {
@@ -80,16 +85,14 @@ class DetailMovieActivity : AppCompatActivity() {
 
     @SuppressLint("ShowToast")
     private fun setFavorite(boolean: Boolean) {
-        if(movieFavoriteEntity != null) {
+        lifecycleScope.launch {
             if (boolean) {
-                detailMovieViewModel.insertFavoriteMovie(movieFavoriteEntity!!)
-                Toast.makeText(this, "Added to favorite!", Toast.LENGTH_SHORT).show()
+                detailMovieViewModel.insertFavoriteMovie(movie.mapToFavoriteEntity())
+                Toast.makeText(this@DetailMovieActivity, "Added to favorite!", Toast.LENGTH_SHORT).show()
+            } else {
+                detailMovieViewModel.deleteFavoriteMovie(movie.mapToFavoriteEntity())
+                Toast.makeText(this@DetailMovieActivity, "Removed from favorite!", Toast.LENGTH_SHORT).show()
             }
-            else {
-                detailMovieViewModel.deleteFavoriteMovie(movieFavoriteEntity!!)
-                Toast.makeText(this, "Removed to favorite!", Toast.LENGTH_SHORT).show()
-            }
-
             binding.btnFavorite.toggle(boolean)
         }
     }
