@@ -73,7 +73,27 @@ object Mapper {
             when { !this.durationArray.isNullOrEmpty() -> this.durationArray[0] else -> 0 },
             this.overview)
     }
+
     fun Movie.mapToFavoriteEntity(): MovieFavoriteEntity = MovieFavoriteEntity(this.id, this.posterUrl, this.title, this.releaseDate, this.genres)
     fun TVSeries.mapToFavoriteEntity(): TVSeriesFavoriteEntity = TVSeriesFavoriteEntity(this.id, this.posterUrl, this.title, this.releaseDate, this.genres)
 
+    fun MovieFavoriteEntity.mapToMovie(): Movie = Movie(this.id, this.posterUrl, this.title, this.date, this.genres, 0, "-")
+    fun TVSeriesFavoriteEntity.mapToTVSeries(): TVSeries = TVSeries(this.id, this.posterUrl, this.title, this.date, this.genres, 0, "-")
+
+    @JvmName("mapToMovieMovieFavoriteEntity")
+    fun List<MovieFavoriteEntity>.mapToMovie(): ArrayList<Movie> {
+        val arrayList = ArrayList<Movie>()
+        this.map { movieFavoriteEntity ->
+            arrayList.add(movieFavoriteEntity.mapToMovie())
+        }
+        return arrayList
+    }
+    @JvmName("mapToMovieTVSeriesFavoriteEntity")
+    fun List<TVSeriesFavoriteEntity>.mapToTVSeries(): ArrayList<TVSeries> {
+        val arrayList = ArrayList<TVSeries>()
+        this.map { tvSeriesFavoriteEntity ->
+            arrayList.add(tvSeriesFavoriteEntity.mapToTVSeries())
+        }
+        return arrayList
+    }
 }

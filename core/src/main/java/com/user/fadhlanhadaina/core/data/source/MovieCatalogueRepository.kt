@@ -2,11 +2,10 @@ package com.user.fadhlanhadaina.core.data.source
 
 import com.user.fadhlanhadaina.core.data.source.remote.RemoteDataSource
 import com.user.fadhlanhadaina.core.domain.model.Movie
-import com.user.fadhlanhadaina.core.data.source.local.entity.MovieFavoriteEntity
 import com.user.fadhlanhadaina.core.domain.model.TVSeries
-import com.user.fadhlanhadaina.core.data.source.local.entity.TVSeriesFavoriteEntity
 import com.user.fadhlanhadaina.core.data.source.local.LocalDataSource
 import com.user.fadhlanhadaina.core.domain.repository.IMovieCatalogueRepository
+import com.user.fadhlanhadaina.core.util.Mapper.mapToFavoriteEntity
 import com.user.fadhlanhadaina.core.util.Mapper.mapToMovie
 import com.user.fadhlanhadaina.core.util.Mapper.mapToTVSeries
 import kotlinx.coroutines.Dispatchers
@@ -46,43 +45,51 @@ class MovieCatalogueRepository @Inject constructor(private val remoteDataSource:
         emit(model)
     }.flowOn(Dispatchers.IO)
 
-    override fun getFavoriteMovies(): Flow<List<MovieFavoriteEntity>> {
-        return localDataSource.getAllFavoriteMovie()
-    }
+    override fun getFavoriteMovies(): Flow<List<Movie>> = flow {
+        val flow = localDataSource.getAllFavoriteMovie()
+        val list = flow.first()
+        emit(list.mapToMovie())
+    }.flowOn(Dispatchers.IO)
 
-    override fun isFavoriteMovieExist(id: Int): Flow<MovieFavoriteEntity?> {
-        return localDataSource.getFavoriteMovieById(id)
-    }
+    override fun isFavoriteMovieExist(id: Int): Flow<Movie?> = flow {
+        val flow = localDataSource.getFavoriteMovieById(id)
+        val model = flow.first()
+        emit(model?.mapToMovie())
+    }.flowOn(Dispatchers.IO)
 
-    override suspend fun setFavoriteMovie(favoriteMovieEntity: MovieFavoriteEntity) {
+    override suspend fun setFavoriteMovie(movie: Movie) {
         withContext(Dispatchers.IO) {
-            localDataSource.insertFavoriteMovie(favoriteMovieEntity)
+            localDataSource.insertFavoriteMovie(movie.mapToFavoriteEntity())
         }
     }
 
-    override suspend fun deleteFavoriteMovie(favoriteMovieEntity: MovieFavoriteEntity) {
+    override suspend fun deleteFavoriteMovie(movie: Movie) {
         withContext(Dispatchers.IO) {
-            localDataSource.deleteFavoriteMovie(favoriteMovieEntity)
+            localDataSource.deleteFavoriteMovie(movie.mapToFavoriteEntity())
         }
     }
 
-    override fun getFavoriteTVSeries(): Flow<List<TVSeriesFavoriteEntity>> {
-        return localDataSource.getAllFavoriteTVSeries()
-    }
+    override fun getFavoriteTVSeries(): Flow<List<TVSeries>> = flow {
+        val flow = localDataSource.getAllFavoriteTVSeries()
+        val list = flow.first()
+        emit(list.mapToTVSeries())
+    }.flowOn(Dispatchers.IO)
 
-    override fun isFavoriteTVSeriesExist(id: Int): Flow<TVSeriesFavoriteEntity?> {
-        return localDataSource.getFavoriteTVSeriesById(id)
-    }
+    override fun isFavoriteTVSeriesExist(id: Int): Flow<TVSeries?> = flow {
+        val flow = localDataSource.getFavoriteTVSeriesById(id)
+        val model = flow.first()
+        emit(model?.mapToTVSeries())
+    }.flowOn(Dispatchers.IO)
 
-    override suspend fun setFavoriteTVSeries(favoriteTVSeriesFavoriteEntity: TVSeriesFavoriteEntity) {
+    override suspend fun setFavoriteTVSeries(tvSeries: TVSeries) {
         withContext(Dispatchers.IO) {
-            localDataSource.insertFavoriteTVSeries(favoriteTVSeriesFavoriteEntity)
+            localDataSource.insertFavoriteTVSeries(tvSeries.mapToFavoriteEntity())
         }
     }
 
-    override suspend fun deleteFavoriteTVSeries(favoriteTVSeriesFavoriteEntity: TVSeriesFavoriteEntity) {
+    override suspend fun deleteFavoriteTVSeries(tvSeries: TVSeries) {
         withContext(Dispatchers.IO) {
-            localDataSource.deleteFavoriteTVSeries(favoriteTVSeriesFavoriteEntity)
+            localDataSource.deleteFavoriteTVSeries(tvSeries.mapToFavoriteEntity())
         }
     }
 }

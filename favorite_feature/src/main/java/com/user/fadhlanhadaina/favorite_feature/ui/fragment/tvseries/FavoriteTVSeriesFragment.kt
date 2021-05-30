@@ -6,11 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.user.fadhlanhadaina.core.data.source.local.entity.MovieFavoriteEntity
+import com.user.fadhlanhadaina.core.domain.model.Movie
 import com.user.fadhlanhadaina.favorite_feature.databinding.FavoriteTVSeriesFragmentBinding
 import com.user.fadhlanhadaina.favorite_feature.ui.di.DaggerAppComponent
 import com.user.fadhlanhadaina.favorite_feature.ui.viewmodel.ViewModelFactory
@@ -30,6 +29,7 @@ class FavoriteTVSeriesFragment : Fragment() {
     @Inject
     lateinit var factory: ViewModelFactory
     private val viewModel: FavoriteTVSeriesViewModel by viewModels { factory }
+    private lateinit var favoriteTVSeriesAdapter: FavoriteTVSeriesAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return binding.root
@@ -53,15 +53,27 @@ class FavoriteTVSeriesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initRecyclerView()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         showList()
     }
-    private fun showList() {
-        val favoriteTVSeriesAdapter = FavoriteTVSeriesAdapter()
+
+    private fun initRecyclerView() {
+        favoriteTVSeriesAdapter = FavoriteTVSeriesAdapter()
         with(binding) {
             rvFavTVSeries.layoutManager = LinearLayoutManager(context)
             rvFavTVSeries.adapter = favoriteTVSeriesAdapter
+        }
+    }
+
+    private fun showList() {
+        with(binding) {
             viewModel.getAllFavoriteTVSeries().observe(viewLifecycleOwner) {
-                if(it != emptyList<MovieFavoriteEntity>()) {
+                if(it != emptyList<Movie>()) {
                     favoriteTVSeriesAdapter.setData(it)
                     rvFavTVSeries.visibility = View.VISIBLE
                     favoriteTVSeriesInfo.visibility = View.GONE

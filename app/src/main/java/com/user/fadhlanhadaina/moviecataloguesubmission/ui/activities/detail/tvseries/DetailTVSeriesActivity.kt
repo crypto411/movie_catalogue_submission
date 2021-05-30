@@ -12,7 +12,6 @@ import com.user.fadhlanhadaina.moviecataloguesubmission.databinding.ActivityDeta
 import com.user.fadhlanhadaina.core.util.ExtFun.load
 import com.user.fadhlanhadaina.core.util.ExtFun.show
 import com.user.fadhlanhadaina.core.util.ExtFun.toggle
-import com.user.fadhlanhadaina.core.util.Mapper.mapToFavoriteEntity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -48,7 +47,7 @@ class DetailTVSeriesActivity : AppCompatActivity() {
         binding.progressBar.show(true)
         val id = intent.getIntExtra(EXTRA_ID, 0)
         val tvSeriesLiveData = detailTVSeriesViewModel.getTVSeries(id)
-        tvSeriesLiveData.observe(this) { it ->
+        tvSeriesLiveData.observe(this) {
             binding.progressBar.show(false)
             binding.ivMovieDetail.load(it.posterUrl)
 
@@ -86,11 +85,11 @@ class DetailTVSeriesActivity : AppCompatActivity() {
     @SuppressLint("ShowToast")
     private fun setFavorite(boolean: Boolean) = lifecycleScope.launch {
         if (boolean) {
-            detailTVSeriesViewModel.insertFavoriteTVSeries(tvSeries.mapToFavoriteEntity())
+            detailTVSeriesViewModel.insertFavoriteTVSeries(tvSeries)
             Toast.makeText(this@DetailTVSeriesActivity, "Added to favorite!", Toast.LENGTH_SHORT).show()
         }
         else {
-            detailTVSeriesViewModel.deleteFavoriteTVSeries(tvSeries.mapToFavoriteEntity())
+            detailTVSeriesViewModel.deleteFavoriteTVSeries(tvSeries)
             Toast.makeText(this@DetailTVSeriesActivity, "Removed from favorite!", Toast.LENGTH_SHORT).show()
         }
         binding.btnFavorite.toggle(boolean)

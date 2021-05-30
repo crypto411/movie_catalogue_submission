@@ -12,7 +12,6 @@ import com.user.fadhlanhadaina.moviecataloguesubmission.databinding.ActivityDeta
 import com.user.fadhlanhadaina.core.util.ExtFun.load
 import com.user.fadhlanhadaina.core.util.ExtFun.show
 import com.user.fadhlanhadaina.core.util.ExtFun.toggle
-import com.user.fadhlanhadaina.core.util.Mapper.mapToFavoriteEntity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -50,7 +49,7 @@ class DetailMovieActivity : AppCompatActivity() {
         binding.btnFavorite.isEnabled = false
         val id = intent.getIntExtra(EXTRA_ID, 0)
         val movieLiveData = detailMovieViewModel.getMovie(id)
-        movieLiveData.observe(this) { it ->
+        movieLiveData.observe(this) {
             binding.progressBar.show(false)
             binding.ivMovieDetail.load(it.posterUrl)
 
@@ -87,10 +86,10 @@ class DetailMovieActivity : AppCompatActivity() {
     private fun setFavorite(boolean: Boolean) {
         lifecycleScope.launch {
             if (boolean) {
-                detailMovieViewModel.insertFavoriteMovie(movie.mapToFavoriteEntity())
+                detailMovieViewModel.insertFavoriteMovie(movie)
                 Toast.makeText(this@DetailMovieActivity, "Added to favorite!", Toast.LENGTH_SHORT).show()
             } else {
-                detailMovieViewModel.deleteFavoriteMovie(movie.mapToFavoriteEntity())
+                detailMovieViewModel.deleteFavoriteMovie(movie)
                 Toast.makeText(this@DetailMovieActivity, "Removed from favorite!", Toast.LENGTH_SHORT).show()
             }
             binding.btnFavorite.toggle(boolean)

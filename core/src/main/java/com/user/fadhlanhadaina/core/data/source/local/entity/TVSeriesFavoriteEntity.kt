@@ -19,5 +19,5 @@ data class TVSeriesFavoriteEntity (
     var date: String,
 
     @ColumnInfo(name = "genres")
-    var stringGenres: String
+    var genres: String
 )

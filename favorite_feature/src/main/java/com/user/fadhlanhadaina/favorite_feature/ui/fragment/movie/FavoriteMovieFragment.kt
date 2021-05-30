@@ -6,11 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.user.fadhlanhadaina.core.data.source.local.entity.MovieFavoriteEntity
+import com.user.fadhlanhadaina.core.domain.model.Movie
 import com.user.fadhlanhadaina.favorite_feature.databinding.FavoriteMovieFragmentBinding
 import com.user.fadhlanhadaina.favorite_feature.ui.di.DaggerAppComponent
 import com.user.fadhlanhadaina.favorite_feature.ui.viewmodel.ViewModelFactory
@@ -30,6 +29,7 @@ class FavoriteMovieFragment : Fragment() {
     @Inject
     lateinit var factory: ViewModelFactory
     private val viewModel: FavoriteMovieViewModel by viewModels { factory }
+    private lateinit var favoriteMovieAdapter: FavoriteMovieAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return binding.root
@@ -51,16 +51,27 @@ class FavoriteMovieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initRecyclerView()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         showList()
     }
 
-    private fun showList() {
-        val favoriteMovieAdapter = FavoriteMovieAdapter()
+    private fun initRecyclerView() {
+        favoriteMovieAdapter = FavoriteMovieAdapter()
         with(binding) {
             rvFavMovie.layoutManager = LinearLayoutManager(context)
             rvFavMovie.adapter = favoriteMovieAdapter
+        }
+    }
+
+    private fun showList() {
+        with(binding) {
             viewModel.getAllFavoriteMovie().observe(viewLifecycleOwner) {
-                if(it != emptyList<MovieFavoriteEntity>()) {
+                if(it != emptyList<Movie>()) {
                     rvFavMovie.visibility = View.VISIBLE
                     favoriteMovieAdapter.setData(it)
                     favoriteMovieInfo.visibility = View.GONE

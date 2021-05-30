@@ -1,9 +1,7 @@
 package com.user.fadhlanhadaina.core.domain.repository
 
 import com.user.fadhlanhadaina.core.domain.model.Movie
-import com.user.fadhlanhadaina.core.data.source.local.entity.MovieFavoriteEntity
 import com.user.fadhlanhadaina.core.domain.model.TVSeries
-import com.user.fadhlanhadaina.core.data.source.local.entity.TVSeriesFavoriteEntity
 import kotlinx.coroutines.flow.Flow
 
 interface IMovieCatalogueRepository {
@@ -12,13 +10,13 @@ interface IMovieCatalogueRepository {
     fun getTVSeries(): Flow<ArrayList<TVSeries>>
     fun getTVSeriesDetail(id: Int): Flow<TVSeries>
 
-    fun getFavoriteMovies(): Flow<List<MovieFavoriteEntity>>
-    fun isFavoriteMovieExist(id: Int): Flow<MovieFavoriteEntity?>
-    suspend fun setFavoriteMovie(favoriteMovieEntity: MovieFavoriteEntity)
-    suspend fun deleteFavoriteMovie(favoriteMovieEntity: MovieFavoriteEntity)
+    fun getFavoriteMovies(): Flow<List<Movie>>
+    fun isFavoriteMovieExist(id: Int): Flow<Movie?>
+    suspend fun setFavoriteMovie(movie: Movie)
+    suspend fun deleteFavoriteMovie(movie: Movie)
 
-    fun getFavoriteTVSeries(): Flow<List<TVSeriesFavoriteEntity>>
-    fun isFavoriteTVSeriesExist(id: Int): Flow<TVSeriesFavoriteEntity?>
-    suspend fun setFavoriteTVSeries(favoriteTVSeriesFavoriteEntity: TVSeriesFavoriteEntity)
-    suspend fun deleteFavoriteTVSeries(favoriteTVSeriesFavoriteEntity: TVSeriesFavoriteEntity)
+    fun getFavoriteTVSeries(): Flow<List<TVSeries>>
+    fun isFavoriteTVSeriesExist(id: Int): Flow<TVSeries?>
+    suspend fun setFavoriteTVSeries(tvSeries: TVSeries)
+    suspend fun deleteFavoriteTVSeries(TVSeries: TVSeries)
 }
