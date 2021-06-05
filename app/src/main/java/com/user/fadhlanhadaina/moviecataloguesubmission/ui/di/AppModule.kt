@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.user.fadhlanhadaina.moviecataloguesubmission.ui.di
 
 import com.user.fadhlanhadaina.core.domain.usecase.MovieCatalogueInteractor

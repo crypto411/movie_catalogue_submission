@@ -48,6 +48,10 @@ android {
         unitTests.returnDefaultValues = true
     }
     dynamicFeatures = [':favorite_feature']
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 repositories {

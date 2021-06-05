@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.user.fadhlanhadaina.favorite_feature">
 
-    <application>
+    <application tools:ignore="AllowBackup">
         <activity android:name="com.user.fadhlanhadaina.favorite_feature.ui.activity.FavoriteActivity" />
     </application>
 

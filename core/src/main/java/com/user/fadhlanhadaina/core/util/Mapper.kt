@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.user.fadhlanhadaina.core.util
 
 import com.user.fadhlanhadaina.core.data.source.local.entity.MovieFavoriteEntity
