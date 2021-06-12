@@ -9,6 +9,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import net.sqlcipher.database.SQLiteDatabase.getBytes
+import net.sqlcipher.database.SupportFactory
 import javax.inject.Singleton
 
 @Module
@@ -23,6 +25,7 @@ class DatabaseModule {
             "favorite.db"
         )
         .fallbackToDestructiveMigration()
+        .openHelperFactory(SupportFactory(getBytes("onge".toCharArray())))
         .build()
 
     @Provides
